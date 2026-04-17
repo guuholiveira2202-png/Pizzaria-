@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pizzaria Bom de Vida | A Melhor da Cidade</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #ff4757;
+            --primary-hover: #ff6b81;
+            --secondary-color: #2f3542;
+            --bg-color: #f8f9fa;
+            --text-color: #57606f;
+            --heading-color: #2f3542;
+            --card-bg: #ffffff;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            --instagram: #E1306C;
+            --whatsapp: #25D366;
+            --shadow-soft: 0 10px 40px rgba(0,0,0,0.06);
+            --shadow-hover: 0 15px 50px rgba(255, 71, 87, 0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
+
+        /* Navegação Glassmorphism */
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 15px 5%; 
+            background: rgba(255, 255, 255, 0.85); 
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            position: fixed; width: 100%; top: 0; z-index: 1000; transition: var(--transition);
+        }
+        .logo { font-size: 26px; font-weight: 800; color: var(--primary-color); text-decoration: none; display: flex; align-items: center; gap: 8px; letter-spacing: -0.5px; }
+        
+        .nav-right { display: flex; align-items: center; gap: 30px; }
+        .nav-links { list-style: none; display: flex; gap: 25px; align-items: center; }
+        .nav-links a { text-decoration: none; color: var(--heading-color); font-weight: 600; transition: var(--transition); font-size: 0.95rem; position: relative; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0; background-color: var(--primary-color); transition: var(--transition); }
+        .nav-links a:hover::after { width: 100%; }
+        .nav-links a:hover { color: var(--primary-color); }
+
+        .social-links { display: flex; gap: 15px; align-items: center; border-left: 2px solid #eee; padding-left: 20px; }
+        .social-icon { font-size: 1.4rem; transition: var(--transition); text-decoration: none; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #f1f2f6; }
+        .icon-insta { color: var(--heading-color); }
+        .icon-insta:hover { color: white; background: var(--instagram); transform: translateY(-3px); }
+        .icon-wpp { color: var(--heading-color); }
+        .icon-wpp:hover { color: white; background: var(--whatsapp); transform: translateY(-3px); }
+
+        .cart-icon { 
+            font-size: 1.3rem; cursor: pointer; position: relative; color: white; background: var(--heading-color); 
+            width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .cart-icon:hover { background: var(--primary-color); transform: scale(1.05); }
+        #cart-count { position: absolute; top: -5px; right: -5px; background-color: var(--primary-color); color: white; font-size: 12px; font-weight: 700; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid white; }
+
+        /* Hero Section com animação de fundo */
+        .hero { 
+            height: 100vh; 
+            background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; 
+            background-attachment: fixed;
+            display: flex; align-items: center; padding: 0 5%; position: relative; 
+        }
+        .hero-content { max-width: 600px; color: white; animation: fadeInUp 1s ease-out; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .hero-badge { display: inline-block; padding: 8px 15px; background: rgba(255, 71, 87, 0.2); border: 1px solid var(--primary-color); color: white; border-radius: 30px; font-size: 0.85rem; font-weight: 600; margin-bottom: 20px; backdrop-filter: blur(5px); }
+        .hero-content h1 { font-size: 4rem; margin-bottom: 20px; line-height: 1.1; font-weight: 800; letter-spacing: -1px; }
+        .hero-content p { font-size: 1.2rem; margin-bottom: 40px; font-weight: 300; opacity: 0.9; line-height: 1.6; }
+        
+        .btn { padding: 16px 35px; background-color: var(--primary-color); color: white; text-decoration: none; border: none; border-radius: 30px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 8px 25px rgba(255, 71, 87, 0.4); }
+        .btn:hover { background-color: var(--primary-hover); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(255, 71, 87, 0.5); }
+
+        /* Onda Divisória */
+        .wave-bottom { position: absolute; bottom: -1px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
+        .wave-bottom svg { position: relative; display: block; width: calc(100% + 1.3px); height: 70px; }
+        .wave-bottom .shape-fill { fill: var(--bg-color); }
+
+        /* Cardápio */
+        .menu-section { padding: 100px 5%; max-width: 1400px; margin: 0 auto; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: 2.8rem; color: var(--heading-color); font-weight: 800; letter-spacing: -1px; }
+        .section-header p { color: var(--primary-color); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 10px; }
+        
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 40px; }
+        .pizza-card { background-color: var(--card-bg); border-radius: 24px; overflow: hidden; box-shadow: var(--shadow-soft); transition: var(--transition); display: flex; flex-direction: column; position: relative; border: 1px solid rgba(0,0,0,0.02); }
+        .pizza-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-hover); border-color: rgba(255, 71, 87, 0.1); }
+        
+        .pizza-image-wrapper { position: relative; height: 240px; overflow: hidden; }
+        .pizza-image-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .pizza-card:hover .pizza-image-wrapper img { transform: scale(1.08); }
+        
+        .badge-hot { position: absolute; top: 15px; left: 15px; background: white; color: var(--primary-color); padding: 5px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 2; display: flex; align-items: center; gap: 5px; }
+        
+        .pizza-info { padding: 30px 25px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; background: white; }
+        .pizza-info h3 { font-size: 1.4rem; margin-bottom: 12px; color: var(--heading-color); font-weight: 700; }
+        .pizza-info p { color: var(--text-color); font-size: 0.95rem; margin-bottom: 25px; line-height: 1.6; }
+        
+        .price-row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 20px; border-top: 1px dashed #eee; }
+        .price { font-size: 1.6rem; font-weight: 800; color: var(--heading-color); }
+        .price span { font-size: 0.9rem; color: var(--text-color); font-weight: 500; }
+        
+        .btn-add { width: 45px; height: 45px; padding: 0; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; background: #f1f2f6; color: var(--heading-color); box-shadow: none; }
+        .btn-add:hover { background: var(--primary-color); color: white; transform: rotate(90deg) scale(1.1); box-shadow: 0 5px 15px rgba(255,71,87,0.3); }
+
+        /* Carrinho Sidebar */
+        .cart-sidebar { position: fixed; top: 0; right: -450px; width: 400px; max-width: 100%; height: 100vh; background-color: var(--card-bg); box-shadow: -10px 0 30px rgba(0,0,0,0.1); transition: right 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); z-index: 1001; display: flex; flex-direction: column; }
+        .cart-sidebar.open { right: 0; }
+        .cart-header { display: flex; justify-content: space-between; align-items: center; padding: 25px; border-bottom: 1px solid #f1f2f6; }
+        .cart-header h3 { font-size: 1.4rem; color: var(--heading-color); font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .close-btn { background: #f1f2f6; border: none; color: var(--heading-color); width: 35px; height: 35px; border-radius: 50%; font-size: 18px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+        .close-btn:hover { background: var(--primary-color); color: white; transform: rotate(90deg); }
+        
+        .cart-items { flex: 1; overflow-y: auto; padding: 25px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; background: var(--bg-color); padding: 15px 20px; border-radius: 15px; margin-bottom: 15px; border: 1px solid #eee; }
+        .cart-item h4 { font-size: 0.95rem; color: var(--heading-color); margin-bottom: 5px; }
+        .cart-item-price { color: var(--primary-color); font-weight: 700; font-size: 1.1rem; }
+        .remove-btn { background: rgba(255, 71, 87, 0.1); border: none; color: var(--primary-color); width: 30px; height: 30px; border-radius: 8px; cursor: pointer; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+        .remove-btn:hover { background: var(--primary-color); color: white; }
+        
+        .cart-footer { padding: 25px; background: white; border-top: 1px solid #f1f2f6; box-shadow: 0 -5px 20px rgba(0,0,0,0.02); }
+        .total { font-size: 1.4rem; font-weight: 800; margin-bottom: 20px; display: flex; justify-content: space-between; color: var(--heading-color); align-items: center; }
+        .total span { color: var(--primary-color); font-size: 1.8rem; }
+        .checkout-btn { width: 100%; justify-content: center; padding: 18px; border-radius: 15px; font-size: 1.1rem; }
+
+        /* Modal Pagamento */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .modal-content { background-color: var(--card-bg); border-radius: 24px; width: 90%; max-width: 500px; padding: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.2); animation: slideUp 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); max-height: 90vh; overflow-y: auto; }
+        @keyframes slideUp { from { transform: translateY(50px) scale(0.95); opacity: 0; } to { transform: translateY(0) scale(1); opacity: 1; } }
+        
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .modal-header h2 { color: var(--heading-color); font-weight: 800; font-size: 1.6rem; }
+        .close-modal { background: #f1f2f6; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 20px; cursor: pointer; color: var(--heading-color); transition: var(--transition); }
+        .close-modal:hover { background: var(--primary-color); color: white; }
+        
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--heading-color); font-size: 0.9rem; }
+        .form-group input[type="text"], .form-group select { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 12px; font-size: 1rem; outline: none; transition: var(--transition); background: #fafafa; color: var(--heading-color); }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary-color); background: #fff; box-shadow: 0 0 0 4px rgba(255, 71, 87, 0.1); }
+        
+        .payment-details-box { display: none; background-color: #fafafa; padding: 25px; border-radius: 16px; margin-bottom: 25px; border: 2px dashed #eee; animation: fadeIn 0.4s ease; }
+        .qr-code-placeholder { margin: 20px 0; padding: 25px; background: white; border: 1px solid #eee; border-radius: 12px; color: var(--heading-color); text-align: center; box-shadow: var(--shadow-soft); }
+        .qr-code-placeholder i { font-size: 60px; margin-bottom: 15px; color: var(--primary-color); }
+        .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        input[type="file"] { width: 100%; padding: 12px; background: white; border: 2px solid #eee; border-radius: 12px; font-size: 0.9rem; cursor: pointer; color: var(--text-color); }
+        input[type="file"]::file-selector-button { background: var(--heading-color); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; margin-right: 15px; transition: var(--transition); }
+        input[type="file"]::file-selector-button:hover { background: var(--primary-color); }
+
+        /* Rodapé Estilizado */
+        footer { background-color: var(--heading-color); color: white; text-align: center; padding: 70px 20px 30px; margin-top: 50px; border-top-left-radius: 40px; border-top-right-radius: 40px; }
+        .footer-content { max-width: 600px; margin: 0 auto; }
+        .footer-logo { font-size: 2rem; font-weight: 800; color: white; margin-bottom: 25px; display: inline-block; text-decoration: none; }
+        .footer-logo span { color: var(--primary-color); }
+        .footer-social { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
+        .footer-social .social-icon { background: rgba(255,255,255,0.1); color: white; }
+        .footer-social .icon-insta:hover { background: var(--instagram); }
+        .footer-social .icon-wpp:hover { background: var(--whatsapp); }
+        .footer-info { font-size: 0.95rem; color: #a4b0be; line-height: 2; margin-bottom: 30px; }
+        .footer-info i { margin-right: 10px; color: var(--primary-color); }
+        .copyright { font-size: 0.85rem; color: #747d8c; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            nav { padding: 15px 5%; background: white; backdrop-filter: none; }
+            .nav-links { display: none; }
+            .social-links { border: none; padding-left: 0; }
+            .hero { text-align: center; justify-content: center; }
+            .hero-content h1 { font-size: 2.8rem; }
+            .hero-content p { font-size: 1.1rem; }
+            .menu-section { padding: 60px 5%; }
+            .section-header h2 { font-size: 2.2rem; }
+            .cart-sidebar { width: 100%; right: -100%; }
+            .card-row { grid-template-columns: 1fr; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="#home" class="logo"><i class="fas fa-pizza-slice"></i> Bom de Vida</a>
+        <div class="nav-right">
+            <ul class="nav-links">
+                <li><a href="#home">Início</a></li>
+                <li><a href="#menu">Nosso Cardápio</a></li>
+            </ul>
+            
+            <div class="social-links">
+                <a href="https://instagram.com/lowkey_gusta" target="_blank" class="social-icon icon-insta" title="Siga-nos no Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/5511930862733" target="_blank" class="social-icon icon-wpp" title="Peça pelo WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+
+            <div class="cart-icon" onclick="toggleCart()">
+                <i class="fas fa-shopping-bag"></i>
+                <span id="cart-count">0</span>
+            </div>
+        </div>
+    </nav>
+
+    <header id="home" class="hero">
+        <div class="hero-content">
+            <div class="hero-badge"><i class="fas fa-fire"></i> Assada em Forno a Lenha</div>
+            <h1>A verdadeira tradição italiana na sua mesa.</h1>
+            <p>Massa de fermentação natural, ingredientes frescos selecionados e o sabor inconfundível que só a La Bella tem.</p>
+            <a href="#menu" class="btn"><i class="fas fa-utensils"></i> Ver Cardápio</a>
+        </div>
+        
+        <div class="wave-bottom">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+    </header>
+
+    <section id="menu" class="menu-section">
+        <div class="section-header">
+            <p>Faça seu pedido</p>
+            <h2>Cardápio Artesanal</h2>
+        </div>
+        <div class="menu-grid" id="menu-grid">
+            </div>
+    </section>
+
+    <div id="cart-sidebar" class="cart-sidebar">
+        <div class="cart-header">
+            <h3><i class="fas fa-shopping-bag"></i> Sua Sacola</h3>
+            <button class="close-btn" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items">
+            </div>
+        <div class="cart-footer">
+            <div class="total">Total <span id="cart-total">R$ 0,00</span></div>
+            <button class="btn checkout-btn" onclick="checkout()"><i class="fas fa-check-circle"></i> Finalizar Pedido</button>
+        </div>
+    </div>
+
+    <div id="payment-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Concluir Compra</h2>
+                <button class="close-modal" onclick="closePaymentModal()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="modal-body">
+                <div style="background: var(--bg-color); padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center;">
+                    <span style="font-weight: 600; color: var(--text-color);">Valor Total:</span>
+                    <strong id="payment-total-amount" style="font-size: 1.4rem; color: var(--primary-color);">R$ 0,00</strong>
+                </div>
+                
+                <form id="payment-form" onsubmit="processPayment(event)">
+                    <div class="form-group">
+                        <label for="address">Endereço de Entrega Completo</label>
+                        <input type="text" id="address" placeholder="Ex: Rua das Flores, 123, Apto 42 - Bairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-method">Como prefere pagar?</label>
+                        <select id="payment-method" required onchange="togglePaymentArea()">
+                            <option value="">Escolha uma forma de pagamento...</option>
+                            <option value="Pix">PIX (Rápido e Seguro)</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito</option>
+                            <option value="Cartão de Débito">Cartão de Débito</option>
+                            <option value="Dinheiro">Dinheiro (Pagar na entrega)</option>
+                        </select>
+                    </div>
+
+                    <div id="pix-area" class="payment-details-box pix-area">
+                        <h4 style="color: var(--heading-color); margin-bottom: 10px; text-align: center;">Pagamento via PIX</h4>
+                        <p style="text-align: center; color: var(--text-color); font-size: 0.95rem;">Chave Celular: <strong>(11) 93086-2733</strong><br>La Bella Pizza Delivery</p>
+                        
+                        <div class="qr-code-placeholder">
+                            <i class="fas fa-qrcode"></i>
+                            <p style="font-size: 0.9rem;">Abra o app do seu banco e escaneie o código ou use a chave acima.</p>
+                        </div>
+                        
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="comprovante">Anexe o Comprovante (Obrigatório):</label>
+                            <input type="file" id="comprovante" accept="image/*">
+                        </div>
+                    </div>
+
+                    <div id="card-area" class="payment-details-box">
+                        <h4 style="color: var(--heading-color); margin-bottom: 15px;"><i class="far fa-credit-card"></i> Dados do Cartão</h4>
+                        <div class="form-group">
+                            <input type="text" id="card-name" placeholder="Nome impresso no Cartão">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
+                        </div>
+                        <div class="card-row">
+                            <div class="form-group">
+                                <input type="text" id="card-expiry" placeholder="Validade (MM/AA)" maxlength="5">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="card-cvv" placeholder="CVV" maxlength="4">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn checkout-btn" style="margin-top: 10px;">Confirmar e Pedir</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <a href="#home" class="footer-logo">Pizzaria<span> Bom </span> de Vida</a>
+            
+            <div class="footer-social">
+                <a href="https://instagram.com/lowkey_gusta" target="_blank" class="social-icon icon-insta" title="Siga-nos no Instagram">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://wa.me/5511930862733" target="_blank" class="social-icon icon-wpp" title="Fale conosco pelo WhatsApp">
+                    <i class="fab fa-whatsapp"></i>
+                </a>
+            </div>
+
+            <div class="footer-info">
+                <p><i class="fas fa-map-marker-alt"></i> Rua das Pizzas, 123 - Centro, São Paulo - SP</p>
+                <p><i class="fas fa-phone-alt"></i> Delivery / WhatsApp: (11) 93086-2733</p>
+                <p><i class="fab fa-instagram"></i> @lowkey_gusta</p>
+                <p><i class="fas fa-clock"></i> Terça a Domingo - 18h às 23h30</p>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Pizza Bom de Vida. Feito com <i class="fas fa-heart" style="color: var(--primary-color); margin: 0 5px;"></i> para você.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let pizzas = [];
+
+        function loadPizzasFromDB() {
+            const dbPizzas = localStorage.getItem('db_pizzas');
+            if (dbPizzas) {
+                pizzas = JSON.parse(dbPizzas);
+            } else {
+                pizzas = [
+                    { id: 1, name: "Margherita", description: "Molho de tomate especial, mussarela de búfala fresco e manjericão orgânico.", price: 45.00, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" },
+                    { id: 2, name: "Calabresa Premium", description: "Calabresa artesanal defumada, cebola roxa, azeitonas pretas e orégano.", price: 42.00, image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
+                ];
+                localStorage.setItem('db_pizzas', JSON.stringify(pizzas));
+            }
+        }
+
+        loadPizzasFromDB();
+
+        let cart = [];
+
+        function renderMenu() {
+            const menuGrid = document.getElementById('menu-grid');
+            menuGrid.innerHTML = '';
+            
+            pizzas.forEach((pizza, index) => {
+                const pizzaCard = document.createElement('div');
+                pizzaCard.className = 'pizza-card';
+                
+                let badgeHtml = index === 0 ? `<div class="badge-hot"><i class="fas fa-star"></i> Sucesso</div>` : '';
+
+                pizzaCard.innerHTML = `
+                    <div class="pizza-image-wrapper">
+                        ${badgeHtml}
+                        <img src="${pizza.image}" alt="Pizza ${pizza.name}">
+                    </div>
+                    <div class="pizza-info">
+                        <div>
+                            <h3>${pizza.name}</h3>
+                            <p>${pizza.description}</p>
+                        </div>
+                        <div class="price-row">
+                            <span class="price"><span>R$</span> ${pizza.price.toFixed(2).replace('.', ',')}</span>
+                            <button class="btn-add" onclick="addToCart(${pizza.id})" title="Adicionar ao Carrinho">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                menuGrid.appendChild(pizzaCard);
+            });
+        }
+
+        function toggleCart() {
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('open');
+        }
+
+        function addToCart(id) {
+            const pizza = pizzas.find(p => p.id === id);
+            cart.push(pizza);
+            updateCartUI();
+            
+            const cartIcon = document.querySelector('.cart-icon');
+            cartIcon.style.transform = 'scale(1.2) translateY(-5px)';
+            cartIcon.style.boxShadow = '0 10px 20px rgba(255,71,87,0.4)';
+            setTimeout(() => {
+                cartIcon.style.transform = 'scale(1)';
+                cartIcon.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
+            }, 300);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const cartCount = document.getElementById('cart-count');
+            const cartTotal = document.getElementById('cart-total');
+            
+            cartCount.innerText = cart.length;
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<div style="text-align:center; padding: 40px 0; color: #a4b0be;"><i class="fas fa-shopping-basket" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i><p>Sua sacola está vazia.</p></div>';
+                cartTotal.innerText = 'R$ 0,00';
+                return;
+            }
+            
+            cartItemsContainer.innerHTML = '';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                total += item.price;
+                const itemElement = document.createElement('div');
+                itemElement.className = 'cart-item';
+                itemElement.innerHTML = `
+                    <div>
+                        <h4>${item.name}</h4>
+                        <span class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                    </div>
+                    <button class="remove-btn" onclick="removeFromCart(${index})" title="Remover item">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                `;
+                cartItemsContainer.appendChild(itemElement);
+            });
+            
+            cartTotal.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                alert('Adicione algumas pizzas à sacola primeiro!');
+                return;
+            }
+            const total = cart.reduce((a, b) => a + b.price, 0);
+            document.getElementById('payment-total-amount').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
+            document.getElementById('payment-modal').classList.add('active');
+            toggleCart(); 
+        }
+
+        function closePaymentModal() {
+            document.getElementById('payment-modal').classList.remove('active');
+        }
+
+        function togglePaymentArea() {
+            const method = document.getElementById('payment-method').value;
+            const pixArea = document.getElementById('pix-area');
+            const cardArea = document.getElementById('card-area');
+            const cardInputs = cardArea.querySelectorAll('input');
+            const comprovanteInput = document.getElementById('comprovante');
+
+            pixArea.style.display = 'none';
+            cardArea.style.display = 'none';
+            
+            cardInputs.forEach(input => input.removeAttribute('required'));
+            comprovanteInput.removeAttribute('required');
+
+            if (method === 'Pix') {
+                pixArea.style.display = 'block';
+                comprovanteInput.setAttribute('required', 'true');
+            } else if (method === 'Cartão de Crédito' || method === 'Cartão de Débito') {
+                cardArea.style.display = 'block';
+                cardInputs.forEach(input => input.setAttribute('required', 'true'));
+            }
+        }
+
+        function processPayment(event) {
+            event.preventDefault(); 
+            
+            const address = document.getElementById('address').value;
+            const method = document.getElementById('payment-method').value;
+            const total = cart.reduce((a, b) => a + b.price, 0).toFixed(2).replace('.', ',');
+            
+            if (method === 'Pix') {
+                const fileInput = document.getElementById('comprovante');
+                if (fileInput.files.length > 0) {
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const imageData = e.target.result; 
+                        finalizeOrder(address, method, imageData, total);
+                    };
+                    
+                    reader.readAsDataURL(fileInput.files[0]);
+                    return; 
+                }
+            }
+            
+            finalizeOrder(address, method, null, total);
+        }
+
+        function finalizeOrder(address, method, imageBase64, total) {
+            const newOrder = {
+                id: Date.now(),
+                date: new Date().toLocaleString('pt-BR'),
+                address: address,
+                paymentMethod: method,
+                comprovanteData: imageBase64, 
+                items: cart,
+                total: total
+            };
+
+            let orders = JSON.parse(localStorage.getItem('db_pedidos')) || [];
+            orders.push(newOrder);
+            
+            try {
+                localStorage.setItem('db_pedidos', JSON.stringify(orders));
+                
+                alert(`🎉 Pedido confirmado com sucesso!\n\nValor: R$ ${total}\nPagamento: ${method}\nEndereço: ${address}\n\nSua pizza chegará quentinha em breve!`);
+                
+                cart = [];
+                updateCartUI();
+                closePaymentModal(); 
+                document.getElementById('payment-form').reset(); 
+                document.getElementById('pix-area').style.display = 'none';
+                document.getElementById('card-area').style.display = 'none';
+            } catch (error) {
+                alert("Erro: A imagem do comprovante é muito grande. Tente enviar uma foto com tamanho menor.");
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            renderMenu();
+            updateCartUI(); 
+        });
+    </script>
+</body>
+</html>
