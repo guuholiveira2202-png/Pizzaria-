@@ -19,6 +19,8 @@
             --info: #1e90ff;
             --info-hover: #3742fa;
             --warning: #feca57;
+            --danger: #ff4757;
+            --danger-hover: #ff6b81;
             --border: #dfe4ea;
             --shadow: 0 4px 20px rgba(0,0,0,0.05);
         }
@@ -36,13 +38,13 @@
         .back-link { color: var(--gray); text-decoration: none; font-weight: 500; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
         .back-link:hover { color: var(--primary); }
 
-        /* NOVO: Stats Dashboard */
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-bottom: 30px; }
+        /* Stats Dashboard */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 30px; }
         .stat-card { background: var(--white); border-radius: 15px; padding: 25px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 20px; border-left: 5px solid var(--primary); transition: transform 0.3s ease; }
         .stat-card:hover { transform: translateY(-5px); }
         .stat-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(255, 71, 87, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; }
-        .stat-info h3 { font-size: 0.9rem; color: var(--gray); font-weight: 500; margin-bottom: 5px; }
-        .stat-info p { font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+        .stat-info h3 { font-size: 0.85rem; color: var(--gray); font-weight: 500; margin-bottom: 5px; }
+        .stat-info p { font-size: 1.3rem; font-weight: 700; color: var(--dark); }
 
         /* Cards */
         .card { background: var(--white); border-radius: 15px; padding: 30px; box-shadow: var(--shadow); margin-bottom: 30px; }
@@ -66,13 +68,20 @@
 
         /* Buttons */
         .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-sm { padding: 6px 12px; font-size: 0.8rem; }
+        .btn-sm { padding: 6px 12px; font-size: 0.8rem; width: 100%; justify-content: flex-start; }
         .btn-primary { background-color: var(--primary); color: white; }
         .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
         .btn-success { background-color: var(--success); color: white; }
         .btn-success:hover { background-color: var(--success-hover); }
+        .btn-danger { background-color: var(--danger); color: white; }
+        .btn-danger:hover { background-color: var(--danger-hover); }
         .btn-info { background-color: var(--info); color: white; margin-top: 8px; }
         .btn-info:hover { background-color: var(--info-hover); }
+        .btn-outline { background-color: transparent; border: 1px solid var(--border); color: var(--gray); font-size: 0.85rem; width: auto; }
+        .btn-outline:hover { background-color: #f8f9fa; color: var(--dark); }
+
+        /* Container para botões de ação na tabela */
+        .action-buttons { display: flex; flex-direction: column; gap: 8px; }
 
         /* Forms */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
@@ -99,6 +108,7 @@
             .form-grid { grid-template-columns: 1fr; }
             .form-group.full-width { grid-column: span 1; }
             .top-bar { flex-direction: column; gap: 15px; align-items: flex-start; }
+            .card-header { flex-direction: column; align-items: flex-start; gap: 10px; }
         }
     </style>
 </head>
@@ -121,22 +131,22 @@
                     <p id="stat-pedidos">0</p>
                 </div>
             </div>
-            <div class="stat-card" style="border-left-color: var(--success);">
-                <div class="stat-icon" style="background: rgba(46, 213, 115, 0.1); color: var(--success);">
-                    <i class="fas fa-dollar-sign"></i>
-                </div>
-                <div class="stat-info">
-                    <h3>Valor a Receber</h3>
-                    <p id="stat-valor">R$ 0,00</p>
-                </div>
-            </div>
             <div class="stat-card" style="border-left-color: var(--warning);">
                 <div class="stat-icon" style="background: rgba(254, 202, 87, 0.1); color: var(--warning);">
-                    <i class="fas fa-fire"></i>
+                    <i class="fas fa-clock"></i>
                 </div>
                 <div class="stat-info">
                     <h3>Pizzas na Fila</h3>
                     <p id="stat-pizzas">0</p>
+                </div>
+            </div>
+            <div class="stat-card" style="border-left-color: var(--success);">
+                <div class="stat-icon" style="background: rgba(46, 213, 115, 0.1); color: var(--success);">
+                    <i class="fas fa-hand-holding-usd"></i>
+                </div>
+                <div class="stat-info">
+                    <h3>Lucro Total (Vendas)</h3>
+                    <p id="stat-lucro-total" style="color: var(--success);">R$ 0,00</p>
                 </div>
             </div>
         </div>
@@ -160,6 +170,30 @@
                     </thead>
                     <tbody id="orders-table-body">
                         <tr><td colspan="6"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Conectando ao Firebase...</p></div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="card" style="border-top: 4px solid var(--success);">
+            <div class="card-header">
+                <h2><i class="fas fa-history"></i> Histórico de Lucros</h2>
+                <button class="btn btn-outline" onclick="clearProfits()">
+                    <i class="fas fa-trash"></i> Limpar Histórico
+                </button>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Data da Venda</th>
+                            <th>Itens Vendidos</th>
+                            <th>Forma de Pagto</th>
+                            <th>Valor Recebido</th>
+                        </tr>
+                    </thead>
+                    <tbody id="profits-table-body">
+                        <tr><td colspan="4"><div class="empty-state"><i class="fas fa-spinner fa-spin"></i><p>Carregando lucros...</p></div></td></tr>
                     </tbody>
                 </table>
             </div>
@@ -221,9 +255,9 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
+        // Importando getDocs para conseguir limpar o histórico de lucros
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-        // Suas chaves do Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDOrHy4Mswact21Futbi2uMCEgsn-3JzdQ",
             authDomain: "pizzaria-b3fdc.firebaseapp.com",
@@ -236,7 +270,6 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // Variável global para armazenar pedidos e poder abrir o comprovante facilmente
         window.currentOrders = [];
 
         function getPaymentBadge(method) {
@@ -247,19 +280,13 @@
 
         function updateStats(orders) {
             let totalPedidos = orders.length;
-            let valorTotal = 0;
             let totalPizzas = 0;
 
             orders.forEach(order => {
-                let valor = parseFloat(order.total.replace(',', '.'));
-                if (!isNaN(valor)) {
-                    valorTotal += valor;
-                }
                 totalPizzas += order.items ? order.items.length : 0;
             });
 
             document.getElementById('stat-pedidos').innerText = totalPedidos;
-            document.getElementById('stat-valor').innerText = `R$ ${valorTotal.toFixed(2).replace('.', ',')}`;
             document.getElementById('stat-pizzas').innerText = totalPizzas;
         }
 
@@ -284,7 +311,6 @@
             }
 
             tbody.innerHTML = '';
-            // Inverte para mostrar os mais recentes primeiro
             const pedidosParaExibir = [...window.currentOrders].reverse();
 
             pedidosParaExibir.forEach(order => {
@@ -292,7 +318,7 @@
 
                 let comprovanteHtml = '';
                 if (order.paymentMethod === 'Pix' && order.comprovanteData) {
-                    comprovanteHtml = `<br><button class="btn btn-sm btn-info" onclick="viewReceipt('${order.id}')"><i class="fas fa-image"></i> Ver Comprovante</button>`;
+                    comprovanteHtml = `<br><button class="btn btn-sm btn-info" onclick="viewReceipt('${order.id}')" style="width: 100%; justify-content: flex-start;"><i class="fas fa-image"></i> Ver Comprovante</button>`;
                 }
 
                 const tr = document.createElement('tr');
@@ -306,18 +332,105 @@
                     <td>${itemsList}</td>
                     <td class="price-text">R$ ${order.total}</td>
                     <td>
-                        <button class="btn btn-sm btn-success" onclick="finishOrder('${order.id}')">
-                            <i class="fas fa-check"></i> Concluir
-                        </button>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-success" onclick="finishOrder('${order.id}')">
+                                <i class="fas fa-check"></i> Concluir
+                            </button>
+                            <button class="btn btn-sm btn-danger" onclick="rejectOrder('${order.id}')">
+                                <i class="fas fa-times"></i> Recusar
+                            </button>
+                        </div>
                     </td>
                 `;
                 tbody.appendChild(tr);
             });
         });
 
+        // ==========================================
+        // NOVO: MÓDULO DE LUCROS (Tempo Real)
+        // ==========================================
+        const lucrosRef = collection(db, "lucros");
+
+        onSnapshot(lucrosRef, (snapshot) => {
+            const tbody = document.getElementById('profits-table-body');
+            let totalAcumulado = 0;
+            let lucros = [];
+
+            snapshot.forEach(docSnap => {
+                lucros.push({ id: docSnap.id, ...docSnap.data() });
+            });
+
+            if (lucros.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="fas fa-hand-holding-usd"></i><p>Nenhuma venda concluída ainda.</p></div></td></tr>';
+                document.getElementById('stat-lucro-total').innerText = 'R$ 0,00';
+                return;
+            }
+
+            tbody.innerHTML = '';
+            
+            // Inverte para os últimos lucros ficarem no topo
+            lucros.reverse().forEach(venda => {
+                const valorNumerico = parseFloat(venda.total.replace(',', '.'));
+                if (!isNaN(valorNumerico)) totalAcumulado += valorNumerico;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="color: var(--gray); font-size: 0.85rem;">${venda.dateConcluded}</td>
+                    <td style="font-size: 0.85rem; color: var(--gray);">${venda.items}</td>
+                    <td>${getPaymentBadge(venda.paymentMethod)}</td>
+                    <td class="price-text" style="color: var(--success);">+ R$ ${venda.total}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // Atualiza o card de Lucro Total
+            document.getElementById('stat-lucro-total').innerText = `R$ ${totalAcumulado.toFixed(2).replace('.', ',')}`;
+        });
+
+        // AÇÃO: CONCLUIR PEDIDO (Adiciona em Lucros e remove de Pedidos)
         window.finishOrder = async function(orderId) {
-            if(confirm('Concluir este pedido? Ele sumirá da lista e os valores serão atualizados.')) {
+            if(confirm('Deseja dar este pedido como CONCLUÍDO e registrar o lucro?')) {
+                const orderToFinish = window.currentOrders.find(o => o.id === orderId);
+                
+                if (orderToFinish) {
+                    try {
+                        // 1. Adiciona na coleção de lucros
+                        await addDoc(lucrosRef, {
+                            dateConcluded: new Date().toLocaleString('pt-BR'),
+                            items: orderToFinish.items ? orderToFinish.items.map(i => i.name).join(', ') : 'Nenhum item',
+                            total: orderToFinish.total,
+                            paymentMethod: orderToFinish.paymentMethod
+                        });
+
+                        // 2. Remove da coleção de pedidos pendentes
+                        await deleteDoc(doc(db, "pedidos", orderId));
+                    } catch (error) {
+                        console.error("Erro ao concluir pedido: ", error);
+                        alert("Ocorreu um erro ao salvar o lucro.");
+                    }
+                }
+            }
+        }
+
+        // AÇÃO: RECUSAR PEDIDO (Apenas apaga)
+        window.rejectOrder = async function(orderId) {
+            if(confirm('Tem certeza que deseja RECUSAR e cancelar este pedido? Ele será apagado do sistema sem gerar lucro.')) {
                 await deleteDoc(doc(db, "pedidos", orderId));
+            }
+        }
+
+        // AÇÃO: LIMPAR HISTÓRICO DE LUCROS
+        window.clearProfits = async function() {
+            if(confirm('Tem certeza que deseja ZERAR todo o histórico de lucros no Firebase? Esta ação não pode ser desfeita.')) {
+                try {
+                    const querySnapshot = await getDocs(lucrosRef);
+                    querySnapshot.forEach(async (document) => {
+                        await deleteDoc(doc(db, "lucros", document.id));
+                    });
+                } catch (error) {
+                    console.error("Erro ao limpar lucros: ", error);
+                    alert("Erro ao limpar o histórico.");
+                }
             }
         }
 
