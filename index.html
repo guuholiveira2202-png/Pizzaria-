@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzaria Bom de Vida | A Melhor da Cidade</title>
+    <title>Pizzaria Bom de VIda | A Melhor da Cidade</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     
@@ -106,7 +106,7 @@
         .price { font-size: 1.6rem; font-weight: 800; color: var(--heading-color); }
         .price span { font-size: 0.9rem; color: var(--text-color); font-weight: 500; }
         
-        .btn-add { width: 45px; height: 45px; padding: 0; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; background: #f1f2f6; color: var(--heading-color); box-shadow: none; }
+        .btn-add { width: 45px; height: 45px; padding: 0; border-radius: 50%; font-size: 1.1rem; display: flex; align-items: center; justify-content: center; background: #f1f2f6; color: var(--heading-color); box-shadow: none; border: none; cursor: pointer; transition: var(--transition);}
         .btn-add:hover { background: var(--primary-color); color: white; transform: rotate(90deg) scale(1.1); box-shadow: 0 5px 15px rgba(255,71,87,0.3); }
 
         /* Carrinho Sidebar */
@@ -184,7 +184,7 @@
 <body>
 
     <nav>
-        <a href="#home" class="logo"><i class="fas fa-pizza-slice"></i> Bom de Vida</a>
+        <a href="#home" class="logo"><i class="fas fa-pizza-slice"></i>Bom de Vida</a>
         <div class="nav-right">
             <ul class="nav-links">
                 <li><a href="#home">Início</a></li>
@@ -236,8 +236,7 @@
             <h3><i class="fas fa-shopping-bag"></i> Sua Sacola</h3>
             <button class="close-btn" onclick="toggleCart()"><i class="fas fa-times"></i></button>
         </div>
-        <div class="cart-items" id="cart-items">
-            </div>
+        <div class="cart-items" id="cart-items"></div>
         <div class="cart-footer">
             <div class="total">Total <span id="cart-total">R$ 0,00</span></div>
             <button class="btn checkout-btn" onclick="checkout()"><i class="fas fa-check-circle"></i> Finalizar Pedido</button>
@@ -313,7 +312,7 @@
 
     <footer>
         <div class="footer-content">
-            <a href="#home" class="footer-logo">Pizzaria<span> Bom </span> de Vida</a>
+            <a href="#home" class="footer-logo">Pizzaria <span>Bom</span> de Vida</a>
             
             <div class="footer-social">
                 <a href="https://instagram.com/lowkey_gusta" target="_blank" class="social-icon icon-insta" title="Siga-nos no Instagram">
@@ -332,40 +331,91 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2026 Pizza Bom de Vida. Feito com <i class="fas fa-heart" style="color: var(--primary-color); margin: 0 5px;"></i> para você.</p>
+                <p>&copy; 2026 La Bella Pizza. Feito com <i class="fas fa-heart" style="color: var(--primary-color); margin: 0 5px;"></i> para você.</p>
             </div>
         </div>
     </footer>
 
-    <script>
-        let pizzas = [];
+    <script type="module">
+        // Importando o Firebase (Atualizado para a versão 12.12.0 que você gerou)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
+        import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
-        function loadPizzasFromDB() {
-            const dbPizzas = localStorage.getItem('db_pizzas');
-            if (dbPizzas) {
-                pizzas = JSON.parse(dbPizzas);
-            } else {
-                pizzas = [
-                    { id: 1, name: "Margherita", description: "Molho de tomate especial, mussarela de búfala fresco e manjericão orgânico.", price: 45.00, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" },
-                    { id: 2, name: "Calabresa Premium", description: "Calabresa artesanal defumada, cebola roxa, azeitonas pretas e orégano.", price: 42.00, image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
-                ];
-                localStorage.setItem('db_pizzas', JSON.stringify(pizzas));
+        // Suas chaves reais do Firebase!
+        const firebaseConfig = {
+            apiKey: "AIzaSyDOrHy4Mswact21Futbi2uMCEgsn-3JzdQ",
+            authDomain: "pizzaria-b3fdc.firebaseapp.com",
+            projectId: "pizzaria-b3fdc",
+            storageBucket: "pizzaria-b3fdc.firebasestorage.app",
+            messagingSenderId: "696922328015",
+            appId: "1:696922328015:web:0506ce082ec7273c4ae0ba",
+            measurementId: "G-HY0PVPB7DM"
+        };
+
+        const useFirebase = firebaseConfig.apiKey !== "SUA_API_KEY";
+        let app, db, analytics;
+        
+        if (useFirebase) {
+            try {
+                app = initializeApp(firebaseConfig);
+                analytics = getAnalytics(app);
+                db = getFirestore(app);
+                console.log("🔥 Firebase Ativado com Sucesso na Nuvem!");
+            } catch (e) {
+                console.log("Erro ao ligar o Firebase. Voltando pro banco local.", e);
             }
+        } else {
+            console.log("💻 Usando Banco de Dados Local.");
         }
 
-        loadPizzasFromDB();
+        // Variáveis Globais atreladas ao 'window' para que os botões do HTML achem as funções
+        window.pizzas = [];
+        window.cart = [];
 
-        let cart = [];
+        // Carrega as Pizzas da Nuvem (ou do Local)
+        window.loadPizzasFromDB = async function() {
+            if (useFirebase && db) {
+                try {
+                    const querySnapshot = await getDocs(collection(db, "pizzas"));
+                    window.pizzas = [];
+                    querySnapshot.forEach((doc) => {
+                        window.pizzas.push({ id: doc.id, ...doc.data() });
+                    });
+                    
+                    // Se o banco estiver vazio na nuvem, carrega esse aviso visual
+                    if(window.pizzas.length === 0){
+                       window.pizzas = [
+                          { id: '1', name: "Banco de Dados Conectado!", description: "Você precisa adicionar pizzas no painel do Firebase (Firestore) na coleção 'pizzas' para elas aparecerem aqui.", price: 0.00, image: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
+                       ];
+                    }
+                    window.renderMenu();
+                } catch(e) {
+                    console.error("Erro ao buscar do Firebase:", e);
+                }
+            } else {
+                const dbPizzas = localStorage.getItem('db_pizzas');
+                if (dbPizzas) {
+                    window.pizzas = JSON.parse(dbPizzas);
+                } else {
+                    window.pizzas = [
+                        { id: 1, name: "Margherita", description: "Molho de tomate especial, mussarela de búfala fresco e manjericão orgânico.", price: 45.00, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" },
+                        { id: 2, name: "Calabresa Premium", description: "Calabresa artesanal defumada, cebola roxa, azeitonas pretas e orégano.", price: 42.00, image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
+                    ];
+                    localStorage.setItem('db_pizzas', JSON.stringify(window.pizzas));
+                }
+                window.renderMenu();
+            }
+        };
 
-        function renderMenu() {
+        window.renderMenu = function() {
             const menuGrid = document.getElementById('menu-grid');
             menuGrid.innerHTML = '';
             
-            pizzas.forEach((pizza, index) => {
+            window.pizzas.forEach((pizza, index) => {
                 const pizzaCard = document.createElement('div');
                 pizzaCard.className = 'pizza-card';
-                
-                let badgeHtml = index === 0 ? `<div class="badge-hot"><i class="fas fa-star"></i> Sucesso</div>` : '';
+                let badgeHtml = index === 0 ? `<div class="badge-hot"><i class="fas fa-star"></i> Destaque</div>` : '';
 
                 pizzaCard.innerHTML = `
                     <div class="pizza-image-wrapper">
@@ -378,8 +428,8 @@
                             <p>${pizza.description}</p>
                         </div>
                         <div class="price-row">
-                            <span class="price"><span>R$</span> ${pizza.price.toFixed(2).replace('.', ',')}</span>
-                            <button class="btn-add" onclick="addToCart(${pizza.id})" title="Adicionar ao Carrinho">
+                            <span class="price"><span>R$</span> ${parseFloat(pizza.price).toFixed(2).replace('.', ',')}</span>
+                            <button class="btn-add" onclick="window.addToCart('${pizza.id}')" title="Adicionar ao Carrinho">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -387,17 +437,16 @@
                 `;
                 menuGrid.appendChild(pizzaCard);
             });
-        }
+        };
 
-        function toggleCart() {
-            const sidebar = document.getElementById('cart-sidebar');
-            sidebar.classList.toggle('open');
-        }
+        window.toggleCart = function() {
+            document.getElementById('cart-sidebar').classList.toggle('open');
+        };
 
-        function addToCart(id) {
-            const pizza = pizzas.find(p => p.id === id);
-            cart.push(pizza);
-            updateCartUI();
+        window.addToCart = function(id) {
+            const pizza = window.pizzas.find(p => p.id == id); 
+            window.cart.push(pizza);
+            window.updateCartUI();
             
             const cartIcon = document.querySelector('.cart-icon');
             cartIcon.style.transform = 'scale(1.2) translateY(-5px)';
@@ -406,21 +455,21 @@
                 cartIcon.style.transform = 'scale(1)';
                 cartIcon.style.boxShadow = '0 4px 15px rgba(0,0,0,0.1)';
             }, 300);
-        }
+        };
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
+        window.removeFromCart = function(index) {
+            window.cart.splice(index, 1);
+            window.updateCartUI();
+        };
 
-        function updateCartUI() {
+        window.updateCartUI = function() {
             const cartItemsContainer = document.getElementById('cart-items');
             const cartCount = document.getElementById('cart-count');
             const cartTotal = document.getElementById('cart-total');
             
-            cartCount.innerText = cart.length;
+            cartCount.innerText = window.cart.length;
             
-            if (cart.length === 0) {
+            if (window.cart.length === 0) {
                 cartItemsContainer.innerHTML = '<div style="text-align:center; padding: 40px 0; color: #a4b0be;"><i class="fas fa-shopping-basket" style="font-size: 3rem; margin-bottom: 15px; opacity: 0.5;"></i><p>Sua sacola está vazia.</p></div>';
                 cartTotal.innerText = 'R$ 0,00';
                 return;
@@ -429,16 +478,16 @@
             cartItemsContainer.innerHTML = '';
             let total = 0;
             
-            cart.forEach((item, index) => {
-                total += item.price;
+            window.cart.forEach((item, index) => {
+                total += parseFloat(item.price);
                 const itemElement = document.createElement('div');
                 itemElement.className = 'cart-item';
                 itemElement.innerHTML = `
                     <div>
                         <h4>${item.name}</h4>
-                        <span class="cart-item-price">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                        <span class="cart-item-price">R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}</span>
                     </div>
-                    <button class="remove-btn" onclick="removeFromCart(${index})" title="Remover item">
+                    <button class="remove-btn" onclick="window.removeFromCart(${index})" title="Remover item">
                         <i class="fas fa-trash-alt"></i>
                     </button>
                 `;
@@ -446,24 +495,24 @@
             });
             
             cartTotal.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
-        }
+        };
 
-        function checkout() {
-            if (cart.length === 0) {
+        window.checkout = function() {
+            if (window.cart.length === 0) {
                 alert('Adicione algumas pizzas à sacola primeiro!');
                 return;
             }
-            const total = cart.reduce((a, b) => a + b.price, 0);
+            const total = window.cart.reduce((a, b) => a + parseFloat(b.price), 0);
             document.getElementById('payment-total-amount').innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
             document.getElementById('payment-modal').classList.add('active');
-            toggleCart(); 
-        }
+            window.toggleCart(); 
+        };
 
-        function closePaymentModal() {
+        window.closePaymentModal = function() {
             document.getElementById('payment-modal').classList.remove('active');
-        }
+        };
 
-        function togglePaymentArea() {
+        window.togglePaymentArea = function() {
             const method = document.getElementById('payment-method').value;
             const pixArea = document.getElementById('pix-area');
             const cardArea = document.getElementById('card-area');
@@ -483,14 +532,14 @@
                 cardArea.style.display = 'block';
                 cardInputs.forEach(input => input.setAttribute('required', 'true'));
             }
-        }
+        };
 
-        function processPayment(event) {
+        window.processPayment = function(event) {
             event.preventDefault(); 
             
             const address = document.getElementById('address').value;
             const method = document.getElementById('payment-method').value;
-            const total = cart.reduce((a, b) => a + b.price, 0).toFixed(2).replace('.', ',');
+            const total = window.cart.reduce((a, b) => a + parseFloat(b.price), 0).toFixed(2).replace('.', ',');
             
             if (method === 'Pix') {
                 const fileInput = document.getElementById('comprovante');
@@ -499,7 +548,7 @@
                     
                     reader.onload = function(e) {
                         const imageData = e.target.result; 
-                        finalizeOrder(address, method, imageData, total);
+                        window.finalizeOrder(address, method, imageData, total);
                     };
                     
                     reader.readAsDataURL(fileInput.files[0]);
@@ -507,42 +556,55 @@
                 }
             }
             
-            finalizeOrder(address, method, null, total);
-        }
+            window.finalizeOrder(address, method, null, total);
+        };
 
-        function finalizeOrder(address, method, imageBase64, total) {
+        window.finalizeOrder = async function(address, method, imageBase64, total) {
             const newOrder = {
-                id: Date.now(),
                 date: new Date().toLocaleString('pt-BR'),
                 address: address,
                 paymentMethod: method,
                 comprovanteData: imageBase64, 
-                items: cart,
+                items: window.cart,
                 total: total
             };
 
-            let orders = JSON.parse(localStorage.getItem('db_pedidos')) || [];
-            orders.push(newOrder);
-            
-            try {
-                localStorage.setItem('db_pedidos', JSON.stringify(orders));
+            if (useFirebase && db) {
+                try {
+                    await addDoc(collection(db, "pedidos"), newOrder);
+                    alert(`🎉 Pedido enviado para a nuvem com sucesso!\n\nValor: R$ ${total}\nSua pizza chegará em breve!`);
+                    limparTudoAposPagamento();
+                } catch(e) {
+                    console.error("Erro ao salvar no firebase:", e);
+                    alert("Ops! Verifique as regras de segurança do seu Firestore. Ele pode estar bloqueando a gravação.");
+                }
+            } else {
+                newOrder.id = Date.now();
+                let orders = JSON.parse(localStorage.getItem('db_pedidos')) || [];
+                orders.push(newOrder);
                 
-                alert(`🎉 Pedido confirmado com sucesso!\n\nValor: R$ ${total}\nPagamento: ${method}\nEndereço: ${address}\n\nSua pizza chegará quentinha em breve!`);
-                
-                cart = [];
-                updateCartUI();
-                closePaymentModal(); 
-                document.getElementById('payment-form').reset(); 
-                document.getElementById('pix-area').style.display = 'none';
-                document.getElementById('card-area').style.display = 'none';
-            } catch (error) {
-                alert("Erro: A imagem do comprovante é muito grande. Tente enviar uma foto com tamanho menor.");
+                try {
+                    localStorage.setItem('db_pedidos', JSON.stringify(orders));
+                    alert(`🎉 Pedido confirmado com sucesso!\n\nValor: R$ ${total}\nPagamento: ${method}\nEndereço: ${address}\n\nSua pizza chegará quentinha em breve!`);
+                    limparTudoAposPagamento();
+                } catch (error) {
+                    alert("Erro: A imagem do comprovante é muito grande. Tente enviar uma foto com tamanho menor.");
+                }
             }
+        };
+
+        function limparTudoAposPagamento() {
+            window.cart = [];
+            window.updateCartUI();
+            window.closePaymentModal(); 
+            document.getElementById('payment-form').reset(); 
+            document.getElementById('pix-area').style.display = 'none';
+            document.getElementById('card-area').style.display = 'none';
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            renderMenu();
-            updateCartUI(); 
+            window.loadPizzasFromDB();
+            window.updateCartUI(); 
         });
     </script>
 </body>
