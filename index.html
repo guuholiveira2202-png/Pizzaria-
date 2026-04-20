@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizzaria Bom de VIda | A Melhor da Cidade</title>
+    <title>Pizzaria Bom de Vida | A Melhor da Cidade</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     
     <style>
         :root {
@@ -148,7 +150,6 @@
         .payment-details-box { display: none; background-color: #fafafa; padding: 25px; border-radius: 16px; margin-bottom: 25px; border: 2px dashed #eee; animation: fadeIn 0.4s ease; }
         .qr-code-placeholder { margin: 20px 0; padding: 25px; background: white; border: 1px solid #eee; border-radius: 12px; color: var(--heading-color); text-align: center; box-shadow: var(--shadow-soft); }
         .qr-code-placeholder i { font-size: 60px; margin-bottom: 15px; color: var(--primary-color); }
-        .card-row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
         input[type="file"] { width: 100%; padding: 12px; background: white; border: 2px solid #eee; border-radius: 12px; font-size: 0.9rem; cursor: pointer; color: var(--text-color); }
         input[type="file"]::file-selector-button { background: var(--heading-color); color: white; border: none; padding: 8px 15px; border-radius: 8px; cursor: pointer; margin-right: 15px; transition: var(--transition); }
         input[type="file"]::file-selector-button:hover { background: var(--primary-color); }
@@ -177,8 +178,37 @@
             .menu-section { padding: 60px 5%; }
             .section-header h2 { font-size: 2.2rem; }
             .cart-sidebar { width: 100%; right: -100%; }
-            .card-row { grid-template-columns: 1fr; gap: 0; }
         }
+
+        /* Badges de Pagamento Profissionais para o Cliente */
+        .badge { 
+            padding: 6px 12px; 
+            border-radius: 8px; 
+            font-size: 0.8rem; 
+            font-weight: 600; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px; 
+            text-transform: uppercase; 
+        }
+        .badge-pix { background-color: rgba(13, 163, 155, 0.1); color: #0da39b; border: 1px solid rgba(13, 163, 155, 0.3); }
+        .badge-card { background-color: rgba(30, 144, 255, 0.1); color: #1e90ff; border: 1px solid rgba(30, 144, 255, 0.3); }
+        .badge-money { background-color: rgba(32, 191, 107, 0.1); color: #20bf6b; border: 1px solid rgba(32, 191, 107, 0.3); }
+
+        /* Alertas para o Cliente */
+        .client-payment-info {
+            margin-top: 10px;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
+        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .alert-info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
     </style>
 </head>
 <body>
@@ -211,7 +241,7 @@
         <div class="hero-content">
             <div class="hero-badge"><i class="fas fa-fire"></i> Assada em Forno a Lenha</div>
             <h1>A verdadeira tradição italiana na sua mesa.</h1>
-            <p>Massa de fermentação natural, ingredientes frescos selecionados e o sabor inconfundível que só a La Bella tem.</p>
+            <p>Massa de fermentação natural, ingredientes frescos selecionados e o sabor inconfundível que só a Bom de Vida tem.</p>
             <a href="#menu" class="btn"><i class="fas fa-utensils"></i> Ver Cardápio</a>
         </div>
         
@@ -227,8 +257,7 @@
             <p>Faça seu pedido</p>
             <h2>Cardápio Artesanal</h2>
         </div>
-        <div class="menu-grid" id="menu-grid">
-            </div>
+        <div class="menu-grid" id="menu-grid"></div>
     </section>
 
     <div id="cart-sidebar" class="cart-sidebar">
@@ -257,6 +286,11 @@
                 
                 <form id="payment-form" onsubmit="processPayment(event)">
                     <div class="form-group">
+                        <label for="cep">CEP de Entrega</label>
+                        <input type="text" id="cep" placeholder="Ex: 00000-000" maxlength="9" oninput="buscarCEP()" required>
+                    </div>
+
+                    <div class="form-group">
                         <label for="address">Endereço de Entrega Completo</label>
                         <input type="text" id="address" placeholder="Ex: Rua das Flores, 123, Apto 42 - Bairro" required>
                     </div>
@@ -273,7 +307,7 @@
 
                     <div id="pix-area" class="payment-details-box pix-area">
                         <h4 style="color: var(--heading-color); margin-bottom: 10px; text-align: center;">Pagamento via PIX</h4>
-                        <p style="text-align: center; color: var(--text-color); font-size: 0.95rem;">Chave Celular: <strong>(11) 93086-2733</strong><br>La Bella Pizza Delivery</p>
+                        <p style="text-align: center; color: var(--text-color); font-size: 0.95rem;">Chave Celular: <strong>(11) 93086-2733</strong><br>Bom de Vida Delivery</p>
                         
                         <div class="qr-code-placeholder">
                             <i class="fas fa-qrcode"></i>
@@ -287,24 +321,17 @@
                     </div>
 
                     <div id="card-area" class="payment-details-box">
-                        <h4 style="color: var(--heading-color); margin-bottom: 15px;"><i class="far fa-credit-card"></i> Dados do Cartão</h4>
-                        <div class="form-group">
-                            <input type="text" id="card-name" placeholder="Nome impresso no Cartão">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" id="card-number" placeholder="0000 0000 0000 0000" maxlength="19">
-                        </div>
-                        <div class="card-row">
-                            <div class="form-group">
-                                <input type="text" id="card-expiry" placeholder="Validade (MM/AA)" maxlength="5">
-                            </div>
-                            <div class="form-group">
-                                <input type="text" id="card-cvv" placeholder="CVV" maxlength="4">
-                            </div>
+                        <h4 style="color: var(--heading-color); margin-bottom: 15px;"><i class="far fa-credit-card"></i> Pagamento na Entrega</h4>
+                        
+                        <div class="client-payment-info alert-info">
+                            <i class="fas fa-motorcycle" style="font-size: 1.5rem; color: #0c5460;"></i>
+                            <p style="margin: 0; font-size: 0.95rem;">
+                                <strong>Fique tranquilo!</strong> O nosso entregador levará a maquininha até você. Aceitamos as principais bandeiras.
+                            </p>
                         </div>
                     </div>
 
-                    <button type="submit" class="btn checkout-btn" style="margin-top: 10px;">Confirmar e Pedir</button>
+                    <button type="submit" id="btn-submit-order" class="btn checkout-btn" style="margin-top: 10px;">Confirmar e Pedir</button>
                 </form>
             </div>
         </div>
@@ -331,18 +358,16 @@
             </div>
             
             <div class="copyright">
-                <p>&copy; 2026 La Bella Pizza. Feito com <i class="fas fa-heart" style="color: var(--primary-color); margin: 0 5px;"></i> para você.</p>
+                <p>&copy; 2026 Pizzaria Bom de Vida. Feito com <i class="fas fa-heart" style="color: var(--primary-color); margin: 0 5px;"></i> para você.</p>
             </div>
         </div>
     </footer>
 
     <script type="module">
-        // Importando o Firebase (Atualizado para a versão 12.12.0 que você gerou)
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
         import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
-
-        // Suas chaves reais do Firebase!
+        
         const firebaseConfig = {
             apiKey: "AIzaSyDOrHy4Mswact21Futbi2uMCEgsn-3JzdQ",
             authDomain: "pizzaria-b3fdc.firebaseapp.com",
@@ -352,7 +377,7 @@
             appId: "1:696922328015:web:0506ce082ec7273c4ae0ba",
             measurementId: "G-HY0PVPB7DM"
         };
-
+        
         const useFirebase = firebaseConfig.apiKey !== "SUA_API_KEY";
         let app, db, analytics;
         
@@ -368,12 +393,10 @@
         } else {
             console.log("💻 Usando Banco de Dados Local.");
         }
-
-        // Variáveis Globais atreladas ao 'window' para que os botões do HTML achem as funções
+        
         window.pizzas = [];
         window.cart = [];
-
-        // Carrega as Pizzas da Nuvem (ou do Local)
+        
         window.loadPizzasFromDB = async function() {
             if (useFirebase && db) {
                 try {
@@ -383,12 +406,11 @@
                         window.pizzas.push({ id: doc.id, ...doc.data() });
                     });
                     
-                    // Se o banco estiver vazio na nuvem, carrega esse aviso visual
                     if(window.pizzas.length === 0){
                        window.pizzas = [
                           { id: '1', name: "Banco de Dados Conectado!", description: "Você precisa adicionar pizzas no painel do Firebase (Firestore) na coleção 'pizzas' para elas aparecerem aqui.", price: 0.00, image: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
                        ];
-                    }
+                    } 
                     window.renderMenu();
                 } catch(e) {
                     console.error("Erro ao buscar do Firebase:", e);
@@ -416,7 +438,6 @@
                 const pizzaCard = document.createElement('div');
                 pizzaCard.className = 'pizza-card';
                 let badgeHtml = index === 0 ? `<div class="badge-hot"><i class="fas fa-star"></i> Destaque</div>` : '';
-
                 pizzaCard.innerHTML = `
                     <div class="pizza-image-wrapper">
                         ${badgeHtml}
@@ -447,7 +468,6 @@
             const pizza = window.pizzas.find(p => p.id == id); 
             window.cart.push(pizza);
             window.updateCartUI();
-            
             const cartIcon = document.querySelector('.cart-icon');
             cartIcon.style.transform = 'scale(1.2) translateY(-5px)';
             cartIcon.style.boxShadow = '0 10px 20px rgba(255,71,87,0.4)';
@@ -466,7 +486,6 @@
             const cartItemsContainer = document.getElementById('cart-items');
             const cartCount = document.getElementById('cart-count');
             const cartTotal = document.getElementById('cart-total');
-            
             cartCount.innerText = window.cart.length;
             
             if (window.cart.length === 0) {
@@ -474,32 +493,58 @@
                 cartTotal.innerText = 'R$ 0,00';
                 return;
             }
-            
+
             cartItemsContainer.innerHTML = '';
             let total = 0;
             
             window.cart.forEach((item, index) => {
                 total += parseFloat(item.price);
-                const itemElement = document.createElement('div');
-                itemElement.className = 'cart-item';
-                itemElement.innerHTML = `
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
                     <div>
                         <h4>${item.name}</h4>
                         <span class="cart-item-price">R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}</span>
                     </div>
-                    <button class="remove-btn" onclick="window.removeFromCart(${index})" title="Remover item">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
+                    <button class="remove-btn" onclick="window.removeFromCart(${index})"><i class="fas fa-trash"></i></button>
                 `;
-                cartItemsContainer.appendChild(itemElement);
+                cartItemsContainer.appendChild(cartItem);
             });
             
             cartTotal.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         };
 
+        // Função ViaCEP (Busca automática de endereço)
+        window.buscarCEP = async function() {
+            let cepInput = document.getElementById('cep').value;
+            let cep = cepInput.replace(/\D/g, ''); 
+
+            if (cep.length === 8) {
+                try {
+                    let response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    let data = await response.json();
+                    
+                    if (!data.erro) {
+                        const addressInput = document.getElementById('address');
+                        addressInput.value = `${data.logradouro}, Nº  - ${data.bairro}, ${data.localidade} - ${data.uf}`;
+                        addressInput.focus();
+                    } else {
+                        Swal.fire({ icon: 'error', title: 'Ops...', text: 'CEP não encontrado!', confirmButtonColor: '#ff4757' });
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar CEP", error);
+                }
+            }
+        };
+
         window.checkout = function() {
             if (window.cart.length === 0) {
-                alert('Adicione algumas pizzas à sacola primeiro!');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Sacola Vazia',
+                    text: 'Adicione algumas pizzas à sacola primeiro!',
+                    confirmButtonColor: '#ff4757'
+                });
                 return;
             }
             const total = window.cart.reduce((a, b) => a + parseFloat(b.price), 0);
@@ -516,13 +561,11 @@
             const method = document.getElementById('payment-method').value;
             const pixArea = document.getElementById('pix-area');
             const cardArea = document.getElementById('card-area');
-            const cardInputs = cardArea.querySelectorAll('input');
             const comprovanteInput = document.getElementById('comprovante');
 
             pixArea.style.display = 'none';
             cardArea.style.display = 'none';
             
-            cardInputs.forEach(input => input.removeAttribute('required'));
             comprovanteInput.removeAttribute('required');
 
             if (method === 'Pix') {
@@ -530,7 +573,6 @@
                 comprovanteInput.setAttribute('required', 'true');
             } else if (method === 'Cartão de Crédito' || method === 'Cartão de Débito') {
                 cardArea.style.display = 'block';
-                cardInputs.forEach(input => input.setAttribute('required', 'true'));
             }
         };
 
@@ -559,7 +601,14 @@
             window.finalizeOrder(address, method, null, total);
         };
 
+        // Função de finalizar com Loading e SweetAlert2
         window.finalizeOrder = async function(address, method, imageBase64, total) {
+            const btnSubmit = document.getElementById('btn-submit-order');
+            
+            // Inicia a animação de carregamento
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+            btnSubmit.disabled = true;
+
             const newOrder = {
                 date: new Date().toLocaleString('pt-BR'),
                 address: address,
@@ -569,27 +618,38 @@
                 total: total
             };
 
-            if (useFirebase && db) {
-                try {
+            try {
+                if (useFirebase && db) {
                     await addDoc(collection(db, "pedidos"), newOrder);
-                    alert(`🎉 Pedido enviado para a nuvem com sucesso!\n\nValor: R$ ${total}\nSua pizza chegará em breve!`);
-                    limparTudoAposPagamento();
-                } catch(e) {
-                    console.error("Erro ao salvar no firebase:", e);
-                    alert("Ops! Verifique as regras de segurança do seu Firestore. Ele pode estar bloqueando a gravação.");
-                }
-            } else {
-                newOrder.id = Date.now();
-                let orders = JSON.parse(localStorage.getItem('db_pedidos')) || [];
-                orders.push(newOrder);
-                
-                try {
+                } else {
+                    newOrder.id = Date.now();
+                    let orders = JSON.parse(localStorage.getItem('db_pedidos')) || [];
+                    orders.push(newOrder);
                     localStorage.setItem('db_pedidos', JSON.stringify(orders));
-                    alert(`🎉 Pedido confirmado com sucesso!\n\nValor: R$ ${total}\nPagamento: ${method}\nEndereço: ${address}\n\nSua pizza chegará quentinha em breve!`);
-                    limparTudoAposPagamento();
-                } catch (error) {
-                    alert("Erro: A imagem do comprovante é muito grande. Tente enviar uma foto com tamanho menor.");
                 }
+
+                // Alerta de Sucesso Bonito
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Pedido Confirmado! 🎉',
+                    html: `Valor: <b>R$ ${total}</b><br>Sua pizza chegará quentinha em breve!`,
+                    confirmButtonColor: '#20bf6b'
+                });
+
+                limparTudoAposPagamento();
+
+            } catch(e) {
+                console.error("Erro ao salvar:", e);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erro no Pedido',
+                    text: 'Tivemos um problema. O comprovante pode ser muito grande ou sua conexão falhou.',
+                    confirmButtonColor: '#ff4757'
+                });
+            } finally {
+                // Devolve o botão ao estado normal
+                btnSubmit.innerHTML = 'Confirmar e Pedir';
+                btnSubmit.disabled = false;
             }
         };
 
