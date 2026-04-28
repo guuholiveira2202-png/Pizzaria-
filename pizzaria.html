@@ -23,6 +23,11 @@
             --danger-hover: #ff6b81;
             --border: #dfe4ea;
             --shadow: 0 4px 20px rgba(0,0,0,0.05);
+            
+            /* Cores para pagamentos */
+            --pix-color: #0da39b;
+            --card-color: #1e90ff;
+            --money-color: #20bf6b;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -54,49 +59,49 @@
 
         /* Tables */
         .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 800px; }
+        table { width: 100%; border-collapse: collapse; min-width: 850px; }
         th { background-color: #f8f9fa; color: var(--gray); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; padding: 15px; text-align: left; border-bottom: 2px solid var(--border); }
         td { padding: 15px; border-bottom: 1px solid var(--border); vertical-align: middle; font-size: 0.95rem; }
         tr:hover td { background-color: #fafbfc; }
         
-        /* Badges */
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-block; }
-        .badge-pix { background-color: #eccc68; color: #8a6a00; }
-        .badge-card { background-color: #7bed9f; color: #1e824c; }
-        .badge-money { background-color: #dfe4ea; color: #57606f; }
-        .price-text { font-weight: 700; color: var(--dark); }
+        /* Badges Pagamento */
+        .badge { padding: 6px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .badge-pix { background-color: rgba(13, 163, 155, 0.1); color: var(--pix-color); border: 1px solid rgba(13, 163, 155, 0.3); }
+        .badge-card { background-color: rgba(30, 144, 255, 0.1); color: var(--card-color); border: 1px solid rgba(30, 144, 255, 0.3); }
+        .badge-money { background-color: rgba(32, 191, 107, 0.1); color: var(--money-color); border: 1px solid rgba(32, 191, 107, 0.3); }
+        
+        .payment-info { margin-top: 6px; font-size: 0.8rem; color: var(--gray); display: flex; flex-direction: column; gap: 4px; }
+        .alert-text { color: var(--danger); font-weight: 600; display: flex; align-items: center; gap: 4px; }
+        .price-text { font-weight: 700; color: var(--dark); font-size: 1.1rem; }
+        .address-box { font-size: 0.85rem; line-height: 1.4; color: var(--gray); }
+        .address-box strong { color: var(--dark); }
 
         /* Buttons */
-        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.3s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn-sm { padding: 6px 12px; font-size: 0.8rem; width: 100%; justify-content: flex-start; }
+        .btn { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: all 0.2s ease; display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-sm { padding: 8px 12px; font-size: 0.8rem; width: 100%; }
         .btn-primary { background-color: var(--primary); color: white; }
         .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
         .btn-success { background-color: var(--success); color: white; }
-        .btn-success:hover { background-color: var(--success-hover); }
         .btn-danger { background-color: var(--danger); color: white; }
-        .btn-danger:hover { background-color: var(--danger-hover); }
-        .btn-info { background-color: var(--info); color: white; margin-top: 8px; }
-        .btn-info:hover { background-color: var(--info-hover); }
+        .btn-verify { background-color: var(--pix-color); color: white; }
         .btn-outline { background-color: transparent; border: 1px solid var(--border); color: var(--gray); font-size: 0.85rem; width: auto; }
         .btn-outline:hover { background-color: #f8f9fa; color: var(--dark); }
 
-        /* Container para botões de ação na tabela */
-        .action-buttons { display: flex; flex-direction: column; gap: 8px; }
+        .action-buttons { display: flex; flex-direction: column; gap: 8px; min-width: 120px; }
 
         /* Forms */
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-group { margin-bottom: 20px; }
         .form-group.full-width { grid-column: span 2; }
         label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--dark); font-size: 0.9rem; }
-        input, textarea { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background-color: #f8f9fa; transition: border-color 0.3s, background-color 0.3s; }
-        input:focus, textarea:focus { outline: none; border-color: var(--primary); background-color: var(--white); box-shadow: 0 0 0 3px rgba(255, 71, 87, 0.1); }
-        textarea { resize: vertical; min-height: 100px; }
+        input, textarea { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background-color: #f8f9fa; transition: border-color 0.3s; }
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); background-color: var(--white); }
 
         /* Modal Comprovante */
         .receipt-modal { display: none; position: fixed; z-index: 3000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.85); align-items: center; justify-content: center; flex-direction: column; backdrop-filter: blur(5px); }
         .receipt-modal.active { display: flex; animation: fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .receipt-modal h3 { color: white; margin-bottom: 20px; font-size: 1.5rem; font-weight: 500; }
+        .receipt-modal h3 { color: white; margin-bottom: 20px; font-size: 1.5rem; }
         .receipt-modal img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); object-fit: contain; }
         .close-receipt { position: absolute; top: 30px; right: 40px; color: white; font-size: 40px; cursor: pointer; transition: 0.3s; width: 50px; height: 50px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: rgba(255,255,255,0.1); }
         .close-receipt:hover { background: var(--primary); }
@@ -154,16 +159,16 @@
         <div class="card">
             <div class="card-header">
                 <h2><i class="fas fa-bell"></i> Pedidos Recebidos (Ao Vivo)</h2>
-                <p>Os pedidos aparecem aqui automaticamente.</p>
+                <p>Os pedidos aparecem aqui automaticamente com som de alerta.</p>
             </div>
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
-                            <th>Data/Hora</th>
-                            <th>Endereço</th>
-                            <th>Pagamento</th>
+                            <th>Horário</th>
+                            <th>Entrega</th>
                             <th>Itens</th>
+                            <th>Pagamento</th>
                             <th>Total</th>
                             <th>Ações</th>
                         </tr>
@@ -186,7 +191,7 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Data da Venda</th>
+                            <th>Data/Hora</th>
                             <th>Itens Vendidos</th>
                             <th>Forma de Pagto</th>
                             <th>Valor Recebido</th>
@@ -215,7 +220,7 @@
                     </div>
                     <div class="form-group full-width">
                         <label for="descricao">Descrição (Ingredientes)</label>
-                        <textarea id="descricao" required placeholder="Ex: Frango desfiado, catupiry original, azeitonas e orégano."></textarea>
+                        <textarea id="descricao" required placeholder="Ex: Frango desfiado, catupiry original..."></textarea>
                     </div>
                     <div class="form-group full-width">
                         <label for="imagem">URL da Imagem</label>
@@ -255,7 +260,6 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
-        // Importando getDocs para conseguir limpar o histórico de lucros
         import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, getDocs } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
 
         const firebaseConfig = {
@@ -270,35 +274,75 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
+        // --- VARIÁVEIS DE NOTIFICAÇÃO ---
+        const audioNotificacao = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+        let isPrimeiraCarga = true;
+
+        if (Notification.permission !== "granted") {
+            Notification.requestPermission();
+        }
+        // ------------------------------
+
         window.currentOrders = [];
 
-        function getPaymentBadge(method) {
-            if(method === 'Pix') return `<span class="badge badge-pix"><i class="fab fa-pix"></i> PIX</span>`;
-            if(method && method.includes('Cartão')) return `<span class="badge badge-card"><i class="fas fa-credit-card"></i> ${method}</span>`;
-            return `<span class="badge badge-money"><i class="fas fa-money-bill-wave"></i> ${method || 'Dinheiro'}</span>`;
+        function getPaymentHtml(order) {
+            let html = '';
+            let method = order.paymentMethod || 'Não informado';
+
+            if (method.toLowerCase().includes('pix')) {
+                html += `<div class="badge badge-pix"><i class="fab fa-pix"></i> PIX</div>`;
+                html += `<div class="payment-info">`;
+                if (order.comprovanteData) {
+                    html += `<button class="btn btn-sm btn-verify" onclick="viewReceipt('${order.id}')"><i class="fas fa-file-invoice-dollar"></i> Ver Comprovante</button>`;
+                } else {
+                    html += `<span class="alert-text"><i class="fas fa-exclamation-circle"></i> Faltando comprovante</span>`;
+                }
+                html += `</div>`;
+            } 
+            else if (method.toLowerCase().includes('dinheiro')) {
+                html += `<div class="badge badge-money"><i class="fas fa-money-bill-wave"></i> DINHEIRO</div>`;
+                html += `<div class="payment-info"><span>${order.troco ? 'Troco p/ R$ '+order.troco : 'Sem troco'}</span></div>`;
+            } 
+            else {
+                html += `<div class="badge badge-card"><i class="fas fa-credit-card"></i> ${method.toUpperCase()}</div>`;
+            }
+            return html;
+        }
+
+        function getSimplePaymentBadge(method) {
+            if(method.toLowerCase().includes('pix')) return `<span class="badge badge-pix">PIX</span>`;
+            if(method.toLowerCase().includes('cartão')) return `<span class="badge badge-card">CARTÃO</span>`;
+            return `<span class="badge badge-money">DINHEIRO</span>`;
         }
 
         function updateStats(orders) {
             let totalPedidos = orders.length;
             let totalPizzas = 0;
-
-            orders.forEach(order => {
-                totalPizzas += order.items ? order.items.length : 0;
-            });
-
+            orders.forEach(order => { totalPizzas += order.items ? order.items.length : 0; });
             document.getElementById('stat-pedidos').innerText = totalPedidos;
             document.getElementById('stat-pizzas').innerText = totalPizzas;
         }
 
-        // ==========================================
-        // MÓDULO DE PEDIDOS (Tempo Real)
-        // ==========================================
         const pedidosRef = collection(db, "pedidos");
         
         onSnapshot(pedidosRef, (snapshot) => {
             const tbody = document.getElementById('orders-table-body');
-            window.currentOrders = [];
             
+            // --- LÓGICA DE NOTIFICAÇÃO ---
+            if (!snapshot.metadata.hasPendingWrites) {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === "added" && !isPrimeiraCarga) {
+                        audioNotificacao.play().catch(e => console.log("Som bloqueado: Interaja com a página primeiro."));
+                        if (Notification.permission === "granted") {
+                            new Notification("🍕 Novo Pedido!", { body: "Um novo pedido da La Bella Pizza acabou de chegar!" });
+                        }
+                    }
+                });
+            }
+            isPrimeiraCarga = false;
+            // ------------------------------
+
+            window.currentOrders = [];
             snapshot.forEach(docSnap => {
                 window.currentOrders.push({ id: docSnap.id, ...docSnap.data() });
             });
@@ -306,39 +350,23 @@
             updateStats(window.currentOrders);
 
             if (window.currentOrders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-box-open"></i><p>Nenhum pedido pendente.</p></div></td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-check-circle" style="color: var(--success);"></i><p>Tudo limpo!</p></div></td></tr>`;
                 return;
             }
 
             tbody.innerHTML = '';
-            const pedidosParaExibir = [...window.currentOrders].reverse();
-
-            pedidosParaExibir.forEach(order => {
-                const itemsList = order.items ? order.items.map(item => item.name).join(', ') : 'Nenhum item';
-
-                let comprovanteHtml = '';
-                if (order.paymentMethod === 'Pix' && order.comprovanteData) {
-                    comprovanteHtml = `<br><button class="btn btn-sm btn-info" onclick="viewReceipt('${order.id}')" style="width: 100%; justify-content: flex-start;"><i class="fas fa-image"></i> Ver Comprovante</button>`;
-                }
-
+            [...window.currentOrders].reverse().forEach(order => {
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td style="color: var(--gray); font-size: 0.85rem;">${order.date || 'Sem data'}</td>
-                    <td>${order.address}</td>
-                    <td>
-                        ${getPaymentBadge(order.paymentMethod)}
-                        ${comprovanteHtml}
-                    </td>
-                    <td>${itemsList}</td>
+                    <td style="color: var(--gray); font-size: 0.85rem;"><i class="far fa-clock"></i> ${order.date || ''}</td>
+                    <td><div class="address-box"><strong>${order.address || 'Retirada'}</strong></div></td>
+                    <td>${order.items ? order.items.map(i => `<strong>${i.quantity || 1}x</strong> ${i.name}`).join('<br>') : ''}</td>
+                    <td>${getPaymentHtml(order)}</td>
                     <td class="price-text">R$ ${order.total}</td>
                     <td>
                         <div class="action-buttons">
-                            <button class="btn btn-sm btn-success" onclick="finishOrder('${order.id}')">
-                                <i class="fas fa-check"></i> Concluir
-                            </button>
-                            <button class="btn btn-sm btn-danger" onclick="rejectOrder('${order.id}')">
-                                <i class="fas fa-times"></i> Recusar
-                            </button>
+                            <button class="btn btn-sm btn-success" onclick="finishOrder('${order.id}')"><i class="fas fa-check"></i> Concluir</button>
+                            <button class="btn btn-sm btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="rejectOrder('${order.id}')"><i class="fas fa-times"></i> Cancelar</button>
                         </div>
                     </td>
                 `;
@@ -346,93 +374,53 @@
             });
         });
 
-        // ==========================================
-        // NOVO: MÓDULO DE LUCROS (Tempo Real)
-        // ==========================================
         const lucrosRef = collection(db, "lucros");
-
         onSnapshot(lucrosRef, (snapshot) => {
             const tbody = document.getElementById('profits-table-body');
             let totalAcumulado = 0;
             let lucros = [];
-
-            snapshot.forEach(docSnap => {
-                lucros.push({ id: docSnap.id, ...docSnap.data() });
-            });
+            snapshot.forEach(docSnap => lucros.push({ id: docSnap.id, ...docSnap.data() }));
 
             if (lucros.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="fas fa-hand-holding-usd"></i><p>Nenhuma venda concluída ainda.</p></div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state">Nenhuma venda concluída.</div></td></tr>';
                 document.getElementById('stat-lucro-total').innerText = 'R$ 0,00';
                 return;
             }
 
             tbody.innerHTML = '';
-            
-            // Inverte para os últimos lucros ficarem no topo
             lucros.reverse().forEach(venda => {
                 const valorNumerico = parseFloat(venda.total.replace(',', '.'));
                 if (!isNaN(valorNumerico)) totalAcumulado += valorNumerico;
-
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td style="color: var(--gray); font-size: 0.85rem;">${venda.dateConcluded}</td>
-                    <td style="font-size: 0.85rem; color: var(--gray);">${venda.items}</td>
-                    <td>${getPaymentBadge(venda.paymentMethod)}</td>
-                    <td class="price-text" style="color: var(--success);">+ R$ ${venda.total}</td>
-                `;
+                tr.innerHTML = `<td>${venda.dateConcluded}</td><td>${venda.items}</td><td>${getSimplePaymentBadge(venda.paymentMethod || '')}</td><td class="price-text" style="color: var(--success);">+ R$ ${venda.total}</td>`;
                 tbody.appendChild(tr);
             });
-
-            // Atualiza o card de Lucro Total
             document.getElementById('stat-lucro-total').innerText = `R$ ${totalAcumulado.toFixed(2).replace('.', ',')}`;
         });
 
-        // AÇÃO: CONCLUIR PEDIDO (Adiciona em Lucros e remove de Pedidos)
         window.finishOrder = async function(orderId) {
-            if(confirm('Deseja dar este pedido como CONCLUÍDO e registrar o lucro?')) {
-                const orderToFinish = window.currentOrders.find(o => o.id === orderId);
-                
-                if (orderToFinish) {
-                    try {
-                        // 1. Adiciona na coleção de lucros
-                        await addDoc(lucrosRef, {
-                            dateConcluded: new Date().toLocaleString('pt-BR'),
-                            items: orderToFinish.items ? orderToFinish.items.map(i => i.name).join(', ') : 'Nenhum item',
-                            total: orderToFinish.total,
-                            paymentMethod: orderToFinish.paymentMethod
-                        });
-
-                        // 2. Remove da coleção de pedidos pendentes
-                        await deleteDoc(doc(db, "pedidos", orderId));
-                    } catch (error) {
-                        console.error("Erro ao concluir pedido: ", error);
-                        alert("Ocorreu um erro ao salvar o lucro.");
-                    }
-                }
-            }
-        }
-
-        // AÇÃO: RECUSAR PEDIDO (Apenas apaga)
-        window.rejectOrder = async function(orderId) {
-            if(confirm('Tem certeza que deseja RECUSAR e cancelar este pedido? Ele será apagado do sistema sem gerar lucro.')) {
-                await deleteDoc(doc(db, "pedidos", orderId));
-            }
-        }
-
-        // AÇÃO: LIMPAR HISTÓRICO DE LUCROS
-        window.clearProfits = async function() {
-            if(confirm('Tem certeza que deseja ZERAR todo o histórico de lucros no Firebase? Esta ação não pode ser desfeita.')) {
+            const orderToFinish = window.currentOrders.find(o => o.id === orderId);
+            if (orderToFinish && confirm('Confirmar pagamento e concluir pedido?')) {
                 try {
-                    const querySnapshot = await getDocs(lucrosRef);
-                    querySnapshot.forEach(async (document) => {
-                        await deleteDoc(doc(db, "lucros", document.id));
+                    await addDoc(lucrosRef, {
+                        dateConcluded: new Date().toLocaleString('pt-BR'),
+                        items: orderToFinish.items ? orderToFinish.items.map(i => i.name).join(', ') : 'Nenhum item',
+                        total: orderToFinish.total,
+                        paymentMethod: orderToFinish.paymentMethod
                     });
-                } catch (error) {
-                    console.error("Erro ao limpar lucros: ", error);
-                    alert("Erro ao limpar o histórico.");
-                }
+                    await deleteDoc(doc(db, "pedidos", orderId));
+                } catch (error) { alert("Erro ao salvar lucro."); }
             }
-        }
+        };
+
+        window.rejectOrder = async function(orderId) { if(confirm('Cancelar este pedido?')) await deleteDoc(doc(db, "pedidos", orderId)); };
+
+        window.clearProfits = async function() {
+            if(confirm('Zerar todo o histórico de lucros?')) {
+                const querySnapshot = await getDocs(lucrosRef);
+                querySnapshot.forEach(async (document) => await deleteDoc(doc(db, "lucros", document.id)));
+            }
+        };
 
         window.viewReceipt = function(orderId) {
             const order = window.currentOrders.find(o => o.id === orderId);
@@ -440,75 +428,39 @@
                 document.getElementById('receipt-image').src = order.comprovanteData;
                 document.getElementById('receipt-modal').classList.add('active');
             }
-        }
+        };
 
-        window.closeReceipt = function() {
-            document.getElementById('receipt-modal').classList.remove('active');
-            document.getElementById('receipt-image').src = "";
-        }
+        window.closeReceipt = function() { document.getElementById('receipt-modal').classList.remove('active'); };
 
-        // ==========================================
-        // MÓDULO DO CARDÁPIO (Tempo Real)
-        // ==========================================
         const pizzasRef = collection(db, "pizzas");
-
         onSnapshot(pizzasRef, (snapshot) => {
             const tbody = document.getElementById('pizza-table-body');
             tbody.innerHTML = '';
-
-            if(snapshot.empty) {
-                tbody.innerHTML = `<tr><td colspan="3"><div class="empty-state"><p>Cardápio vazio.</p></div></td></tr>`;
-                return;
-            }
-
             snapshot.forEach(docSnap => {
                 const pizza = docSnap.data();
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td><strong>${pizza.name}</strong></td>
-                    <td class="price-text">R$ ${parseFloat(pizza.price).toFixed(2).replace('.', ',')}</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary" style="background-color: #ff4757;" onclick="deletePizza('${docSnap.id}')">
-                            <i class="fas fa-trash"></i> Excluir
-                        </button>
-                    </td>
-                `;
+                tr.innerHTML = `<td><strong>${pizza.name}</strong></td><td class="price-text">R$ ${parseFloat(pizza.price).toFixed(2).replace('.', ',')}</td><td><button class="btn btn-sm btn-outline" style="color: var(--danger); border-color: var(--danger); width: auto;" onclick="deletePizza('${docSnap.id}')"><i class="fas fa-trash"></i> Excluir</button></td>`;
                 tbody.appendChild(tr);
             });
         });
 
         document.getElementById('add-pizza-form').addEventListener('submit', async function(e) {
             e.preventDefault(); 
-            
             const btn = document.getElementById('btn-salvar-pizza');
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
             btn.disabled = true;
-
-            const newPizza = {
-                name: document.getElementById('nome').value,
-                description: document.getElementById('descricao').value,
-                price: parseFloat(document.getElementById('preco').value),
-                image: document.getElementById('imagem').value
-            };
-
             try {
-                await addDoc(pizzasRef, newPizza);
+                await addDoc(pizzasRef, {
+                    name: document.getElementById('nome').value,
+                    description: document.getElementById('descricao').value,
+                    price: parseFloat(document.getElementById('preco').value),
+                    image: document.getElementById('imagem').value
+                });
                 this.reset(); 
-                alert('Pizza adicionada ao Firebase com sucesso!');
-            } catch (error) {
-                console.error("Erro ao adicionar pizza: ", error);
-                alert("Ocorreu um erro ao salvar a pizza.");
-            } finally {
-                btn.innerHTML = '<i class="fas fa-save"></i> Salvar no Cardápio';
-                btn.disabled = false;
-            }
+                alert('Pizza adicionada!');
+            } finally { btn.disabled = false; }
         });
 
-        window.deletePizza = async function(id) {
-            if(confirm('Tem certeza que deseja excluir esta pizza do seu site?')) {
-                await deleteDoc(doc(db, "pizzas", id));
-            }
-        }
+        window.deletePizza = async function(id) { if(confirm('Excluir pizza?')) await deleteDoc(doc(db, "pizzas", id)); };
     </script>
 </body>
 </html>
