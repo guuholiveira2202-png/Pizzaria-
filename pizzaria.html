@@ -83,6 +83,8 @@
         .btn-primary:hover { background-color: var(--primary-hover); transform: translateY(-2px); }
         .btn-success { background-color: var(--success); color: white; }
         .btn-danger { background-color: var(--danger); color: white; }
+        .btn-info { background-color: var(--info); color: white; }
+        .btn-info:hover { background-color: var(--info-hover); transform: translateY(-2px); }
         .btn-verify { background-color: var(--pix-color); color: white; }
         .btn-outline { background-color: transparent; border: 1px solid var(--border); color: var(--gray); font-size: 0.85rem; width: auto; }
         .btn-outline:hover { background-color: #f8f9fa; color: var(--dark); }
@@ -365,6 +367,7 @@
                     <td class="price-text">R$ ${order.total}</td>
                     <td>
                         <div class="action-buttons">
+                            <button class="btn btn-sm btn-info" onclick="printOrder('${order.id}')"><i class="fas fa-print"></i> Imprimir</button>
                             <button class="btn btn-sm btn-success" onclick="finishOrder('${order.id}')"><i class="fas fa-check"></i> Concluir</button>
                             <button class="btn btn-sm btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="rejectOrder('${order.id}')"><i class="fas fa-times"></i> Cancelar</button>
                         </div>
@@ -431,6 +434,95 @@
         };
 
         window.closeReceipt = function() { document.getElementById('receipt-modal').classList.remove('active'); };
+
+        // --- FUNÇÃO DE IMPRESSÃO ---
+        window.printOrder = function(orderId) {
+            const order = window.currentOrders.find(o => o.id === orderId);
+            if (!order) {
+                alert("Erro: Pedido não encontrado.");
+                return;
+            }
+
+            let itemsHtml = order.items && order.items.length > 0 
+                ? order.items.map(i => `
+                    <div class="flex-between">
+                        <span>${i.quantity || 1}x ${i.name}</span>
+                    </div>`).join('') 
+                : '<p>Nenhum item detalhado</p>';
+
+            let trocoInfo = '';
+            if (order.paymentMethod && order.paymentMethod.toLowerCase().includes('dinheiro') && order.troco) {
+                trocoInfo = `<p>Troco para: R$ ${order.troco}</p>`;
+            }
+
+            const printWindow = window.open('', '_blank', 'width=400,height=600');
+            
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Cupom - Pedido #${order.id.substring(0, 6).toUpperCase()}</title>
+                    <style>
+                        @page { margin: 0; }
+                        body { 
+                            font-family: 'Courier New', Courier, monospace;
+                            width: 100%; 
+                            max-width: 300px;
+                            margin: 0 auto; 
+                            padding: 15px 10px; 
+                            font-size: 14px; 
+                            color: #000;
+                        }
+                        h2 { text-align: center; margin: 0 0 10px 0; font-size: 20px; }
+                        p { margin: 5px 0; line-height: 1.3; }
+                        .divider { border-bottom: 1px dashed #000; margin: 12px 0; }
+                        .bold { font-weight: bold; }
+                        .text-center { text-align: center; }
+                        .flex-between { display: flex; justify-content: space-between; margin-bottom: 5px;}
+                    </style>
+                </head>
+                <body>
+                    <h2>LA BELLA PIZZA</h2>
+                    <div class="text-center">
+                        <p>Pedido: #${order.id.substring(0, 6).toUpperCase()}</p>
+                        <p>${order.date || new Date().toLocaleString('pt-BR')}</p>
+                    </div>
+                    
+                    <div class="divider"></div>
+                    
+                    <p class="bold">CLIENTE / ENTREGA:</p>
+                    <p>${order.address || 'Retirada no Balcão'}</p>
+                    
+                    <div class="divider"></div>
+                    
+                    <p class="bold">ITENS:</p>
+                    ${itemsHtml}
+                    
+                    <div class="divider"></div>
+                    
+                    <div class="flex-between bold" style="font-size: 16px;">
+                        <span>TOTAL:</span>
+                        <span>R$ ${order.total}</span>
+                    </div>
+                    
+                    <p>Pagamento: <span class="bold">${order.paymentMethod || 'Não informado'}</span></p>
+                    ${trocoInfo}
+                    
+                    <div class="divider"></div>
+                    
+                    <p class="text-center">Obrigado pela preferencia!</p>
+                    
+                    <script>
+                        window.onload = function() {
+                            window.focus();
+                            window.print();
+                            setTimeout(function() { window.close(); }, 500);
+                        }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        };
 
         const pizzasRef = collection(db, "pizzas");
         onSnapshot(pizzasRef, (snapshot) => {

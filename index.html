@@ -62,7 +62,7 @@
         .cart-icon:hover { background: var(--primary-color); transform: scale(1.05); }
         #cart-count { position: absolute; top: -5px; right: -5px; background-color: var(--primary-color); color: white; font-size: 12px; font-weight: 700; width: 22px; height: 22px; display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 2px solid white; }
 
-        /* Hero Section com animação de fundo */
+        /* Hero Section */
         .hero { 
             height: 100vh; 
             background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.4) 100%), url('https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; 
@@ -180,34 +180,10 @@
             .cart-sidebar { width: 100%; right: -100%; }
         }
 
-        /* Badges de Pagamento Profissionais para o Cliente */
         .badge { 
-            padding: 6px 12px; 
-            border-radius: 8px; 
-            font-size: 0.8rem; 
-            font-weight: 600; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 6px; 
-            text-transform: uppercase; 
+            padding: 6px 12px; border-radius: 8px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; text-transform: uppercase; 
         }
-        .badge-pix { background-color: rgba(13, 163, 155, 0.1); color: #0da39b; border: 1px solid rgba(13, 163, 155, 0.3); }
-        .badge-card { background-color: rgba(30, 144, 255, 0.1); color: #1e90ff; border: 1px solid rgba(30, 144, 255, 0.3); }
-        .badge-money { background-color: rgba(32, 191, 107, 0.1); color: #20bf6b; border: 1px solid rgba(32, 191, 107, 0.3); }
-
-        /* Alertas para o Cliente */
-        .client-payment-info {
-            margin-top: 10px;
-            padding: 15px;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .alert-warning { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-        .alert-success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .client-payment-info { margin-top: 10px; padding: 15px; border-radius: 8px; font-size: 0.85rem; display: flex; align-items: center; gap: 15px; }
         .alert-info { background-color: #d1ecf1; color: #0c5460; border: 1px solid #bee5eb; }
     </style>
 </head>
@@ -286,7 +262,7 @@
                 
                 <form id="payment-form" onsubmit="processPayment(event)">
                     <div class="form-group">
-                        <label for="cep">CEP de Entrega</label>
+                        <label for="cep">CEP de Entrega (Apenas até 7km de Amador Bueno)</label>
                         <input type="text" id="cep" placeholder="Ex: 00000-000" maxlength="9" oninput="buscarCEP()" required>
                     </div>
 
@@ -326,7 +302,7 @@
                         <div class="client-payment-info alert-info">
                             <i class="fas fa-motorcycle" style="font-size: 1.5rem; color: #0c5460;"></i>
                             <p style="margin: 0; font-size: 0.95rem;">
-                                <strong>Fique tranquilo!</strong> O nosso entregador levará a maquininha até você. Aceitamos as principais bandeiras.
+                                <strong>Fique tranquilo!</strong> O nosso entregador levará a maquininha ou o troco até você.
                             </p>
                         </div>
                     </div>
@@ -351,7 +327,7 @@
             </div>
 
             <div class="footer-info">
-                <p><i class="fas fa-map-marker-alt"></i> Rua das Pizzas, 123 - Centro, São Paulo - SP</p>
+                <p><i class="fas fa-map-marker-alt"></i> Amador Bueno, Itapevi - SP</p>
                 <p><i class="fas fa-phone-alt"></i> Delivery / WhatsApp: (11) 93086-2733</p>
                 <p><i class="fab fa-instagram"></i> @lowkey_gusta</p>
                 <p><i class="fas fa-clock"></i> Terça a Domingo - 18h às 23h30</p>
@@ -396,6 +372,7 @@
         
         window.pizzas = [];
         window.cart = [];
+        window.isDeliveryValid = false; 
         
         window.loadPizzasFromDB = async function() {
             if (useFirebase && db) {
@@ -514,37 +491,137 @@
             cartTotal.innerText = `R$ ${total.toFixed(2).replace('.', ',')}`;
         };
 
-        // Função ViaCEP (Busca automática de endereço)
+        const LAT_PIZZARIA = -23.5385; 
+        const LON_PIZZARIA = -47.0016;
+
+        function calcularDistancia(lat1, lon1, lat2, lon2) {
+            const R = 6371; 
+            const dLat = (lat2 - lat1) * Math.PI / 180;
+            const dLon = (lon2 - lon1) * Math.PI / 180;
+            const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
+                      Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+                      Math.sin(dLon/2) * Math.sin(dLon/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c; 
+        }
+
         window.buscarCEP = async function() {
-            let cepInput = document.getElementById('cep').value;
-            let cep = cepInput.replace(/\D/g, ''); 
+            let cepInput = document.getElementById('cep');
+            let cep = cepInput.value.replace(/\D/g, ''); 
+            
+            window.isDeliveryValid = false;
 
             if (cep.length === 8) {
                 try {
-                    let response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-                    let data = await response.json();
-                    
-                    if (!data.erro) {
-                        const addressInput = document.getElementById('address');
-                        addressInput.value = `${data.logradouro}, Nº  - ${data.bairro}, ${data.localidade} - ${data.uf}`;
-                        addressInput.focus();
-                    } else {
-                        Swal.fire({ icon: 'error', title: 'Ops...', text: 'CEP não encontrado!', confirmButtonColor: '#ff4757' });
+                    let addressData = null;
+                    let latCliente = null;
+                    let lonCliente = null;
+                    let temCoordenadas = false;
+
+                    let resBrasil = await fetch(`https://brasilapi.com.br/api/cep/v2/${cep}`);
+                    if (resBrasil.ok) {
+                        let dataBrasil = await resBrasil.json();
+                        addressData = {
+                            rua: dataBrasil.street,
+                            bairro: dataBrasil.neighborhood,
+                            cidade: dataBrasil.city,
+                            estado: dataBrasil.state
+                        };
+                        
+                        if (dataBrasil.location && dataBrasil.location.coordinates && dataBrasil.location.coordinates.latitude) {
+                            latCliente = parseFloat(dataBrasil.location.coordinates.latitude);
+                            lonCliente = parseFloat(dataBrasil.location.coordinates.longitude);
+                            temCoordenadas = true;
+                        }
                     }
+
+                    if (!addressData || !temCoordenadas) {
+                        let resAwesome = await fetch(`https://cep.awesomeapi.com.br/json/${cep}`);
+                        if (resAwesome.ok) {
+                            let dataAwesome = await resAwesome.json();
+                            addressData = {
+                                rua: dataAwesome.address,
+                                bairro: dataAwesome.district,
+                                cidade: dataAwesome.city,
+                                estado: dataAwesome.state
+                            };
+                            
+                            if (dataAwesome.lat && dataAwesome.lng) {
+                                latCliente = parseFloat(dataAwesome.lat);
+                                lonCliente = parseFloat(dataAwesome.lng);
+                                temCoordenadas = true;
+                            }
+                        }
+                    }
+
+                    if (!addressData) {
+                        Swal.fire({ icon: 'error', title: 'CEP não encontrado', text: 'Verifique o número e tente de novo.', confirmButtonColor: '#ff4757' });
+                        cepInput.value = '';
+                        return;
+                    }
+
+                    // =========================================================
+                    // NOVO: LISTA NEGRA DE CIDADES MUITO DISTANTES
+                    // =========================================================
+                    const cidadeLocal = addressData.cidade.toUpperCase();
+                    
+                    const cidadesBloqueadas = [
+                        'BARUERI', 'CARAPICUÍBA', 'CARAPICUIBA', 
+                        'OSASCO', 'SANTANA DE PARNAÍBA', 'SANTANA DE PARNAIBA', 
+                        'COTIA', 'SÃO ROQUE', 'SAO ROQUE', 'SÃO PAULO', 'SAO PAULO'
+                    ];
+
+                    if (cidadesBloqueadas.includes(cidadeLocal)) {
+                        window.isDeliveryValid = false;
+                        Swal.fire({ 
+                            icon: 'error', 
+                            title: 'Distância Muito Longa 🚫', 
+                            text: `Infelizmente não entregamos em ${addressData.cidade} e regiões próximas. A distância não permite que a pizza chegue quentinha e com a qualidade que você merece!`, 
+                            confirmButtonColor: '#ff4757' 
+                        });
+                        cepInput.value = ''; 
+                        document.getElementById('address').value = '';
+                        return; // O código para AQUI e não faz mais nada.
+                    }
+                    // =========================================================
+
+                    const addressInput = document.getElementById('address');
+                    addressInput.value = `${addressData.rua || ''}, Nº - ${addressData.bairro || ''}, ${addressData.cidade || ''} - ${addressData.estado || ''}`;
+
+                    if (temCoordenadas) {
+                        const distancia = calcularDistancia(LAT_PIZZARIA, LON_PIZZARIA, latCliente, lonCliente);
+
+                        if (distancia > 7) {
+                            window.isDeliveryValid = false;
+                            Swal.fire({ icon: 'error', title: 'Fora da Área de Entrega 🛵🚫', text: `Distância: ${distancia.toFixed(1)} km. Nosso limite é 7 km.`, confirmButtonColor: '#ff4757' });
+                            cepInput.value = ''; addressInput.value = '';
+                        } else {
+                            window.isDeliveryValid = true;
+                            Swal.fire({ icon: 'success', title: 'Área Atendida! 🎉', text: `Apenas ${distancia.toFixed(1)} km de distância!`, toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 });
+                            addressInput.focus();
+                        }
+                    } else {
+                        if (cidadeLocal === 'ITAPEVI' || cidadeLocal === 'JANDIRA') {
+                            window.isDeliveryValid = true;
+                            Swal.fire({ icon: 'success', title: 'Área Atendida! 🎉', text: 'Região de Itapevi/Jandira confirmada!', toast: true, position: 'top-end', showConfirmButton: false, timer: 3000 });
+                            addressInput.focus();
+                        } else {
+                            window.isDeliveryValid = false;
+                            Swal.fire({ icon: 'error', title: 'Fora da Área de Entrega 🛵🚫', text: `Este CEP é de ${addressData.cidade}, muito longe para entrega.`, confirmButtonColor: '#ff4757' });
+                            cepInput.value = ''; addressInput.value = '';
+                        }
+                    }
+
                 } catch (error) {
-                    console.error("Erro ao buscar CEP", error);
+                    console.error("Erro no CEP:", error);
+                    Swal.fire({ icon: 'error', title: 'Erro', text: 'Falha de conexão com a validação de endereço.', confirmButtonColor: '#ff4757' });
                 }
             }
         };
 
         window.checkout = function() {
             if (window.cart.length === 0) {
-                Swal.fire({
-                    icon: 'warning',
-                    title: 'Sacola Vazia',
-                    text: 'Adicione algumas pizzas à sacola primeiro!',
-                    confirmButtonColor: '#ff4757'
-                });
+                Swal.fire({ icon: 'warning', title: 'Sacola Vazia', text: 'Adicione algumas pizzas à sacola primeiro!', confirmButtonColor: '#ff4757' });
                 return;
             }
             const total = window.cart.reduce((a, b) => a + parseFloat(b.price), 0);
@@ -565,19 +642,28 @@
 
             pixArea.style.display = 'none';
             cardArea.style.display = 'none';
-            
             comprovanteInput.removeAttribute('required');
 
             if (method === 'Pix') {
                 pixArea.style.display = 'block';
                 comprovanteInput.setAttribute('required', 'true');
-            } else if (method === 'Cartão de Crédito' || method === 'Cartão de Débito') {
+            } else if (method === 'Cartão de Crédito' || method === 'Cartão de Débito' || method === 'Dinheiro') {
                 cardArea.style.display = 'block';
             }
         };
 
         window.processPayment = function(event) {
             event.preventDefault(); 
+            
+            if (!window.isDeliveryValid) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Endereço Inválido',
+                    text: 'Você precisa inserir um CEP válido e dentro da nossa área de entrega (7km) para concluir o pedido.',
+                    confirmButtonColor: '#ff4757'
+                });
+                return;
+            }
             
             const address = document.getElementById('address').value;
             const method = document.getElementById('payment-method').value;
@@ -587,12 +673,10 @@
                 const fileInput = document.getElementById('comprovante');
                 if (fileInput.files.length > 0) {
                     const reader = new FileReader();
-                    
                     reader.onload = function(e) {
                         const imageData = e.target.result; 
                         window.finalizeOrder(address, method, imageData, total);
                     };
-                    
                     reader.readAsDataURL(fileInput.files[0]);
                     return; 
                 }
@@ -601,11 +685,9 @@
             window.finalizeOrder(address, method, null, total);
         };
 
-        // Função de finalizar com Loading e SweetAlert2
         window.finalizeOrder = async function(address, method, imageBase64, total) {
             const btnSubmit = document.getElementById('btn-submit-order');
             
-            // Inicia a animação de carregamento
             btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
             btnSubmit.disabled = true;
 
@@ -628,7 +710,6 @@
                     localStorage.setItem('db_pedidos', JSON.stringify(orders));
                 }
 
-                // Alerta de Sucesso Bonito
                 Swal.fire({
                     icon: 'success',
                     title: 'Pedido Confirmado! 🎉',
@@ -640,14 +721,8 @@
 
             } catch(e) {
                 console.error("Erro ao salvar:", e);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Erro no Pedido',
-                    text: 'Tivemos um problema. O comprovante pode ser muito grande ou sua conexão falhou.',
-                    confirmButtonColor: '#ff4757'
-                });
+                Swal.fire({ icon: 'error', title: 'Erro no Pedido', text: 'Tivemos um problema. O comprovante pode ser muito grande ou sua conexão falhou.', confirmButtonColor: '#ff4757' });
             } finally {
-                // Devolve o botão ao estado normal
                 btnSubmit.innerHTML = 'Confirmar e Pedir';
                 btnSubmit.disabled = false;
             }
@@ -655,6 +730,7 @@
 
         function limparTudoAposPagamento() {
             window.cart = [];
+            window.isDeliveryValid = false; 
             window.updateCartUI();
             window.closePaymentModal(); 
             document.getElementById('payment-form').reset(); 
