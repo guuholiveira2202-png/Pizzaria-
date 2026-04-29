@@ -95,7 +95,7 @@
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
         .form-group { margin-bottom: 20px; }
         .form-group.full-width { grid-column: span 2; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--dark); font-size: 0.9rem; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--dark); font-size: 0.9rem; }
         input, textarea { width: 100%; padding: 12px 15px; border: 1px solid var(--border); border-radius: 8px; font-family: inherit; font-size: 0.95rem; background-color: #f8f9fa; transition: border-color 0.3s; }
         input:focus, textarea:focus { outline: none; border-color: var(--primary); background-color: var(--white); }
 
@@ -435,7 +435,7 @@
 
         window.closeReceipt = function() { document.getElementById('receipt-modal').classList.remove('active'); };
 
-        // --- FUNÇÃO DE IMPRESSÃO ---
+        // --- FUNÇÃO DE IMPRESSÃO CORRIGIDA PARA CELULAR ---
         window.printOrder = function(orderId) {
             const order = window.currentOrders.find(o => o.id === orderId);
             if (!order) {
@@ -455,9 +455,7 @@
                 trocoInfo = `<p>Troco para: R$ ${order.troco}</p>`;
             }
 
-            const printWindow = window.open('', '_blank', 'width=400,height=600');
-            
-            printWindow.document.write(`
+            const cupomHtml = `
                 <html>
                 <head>
                     <title>Cupom - Pedido #${order.id.substring(0, 6).toUpperCase()}</title>
@@ -510,18 +508,28 @@
                     <div class="divider"></div>
                     
                     <p class="text-center">Obrigado pela preferencia!</p>
-                    
-                    <script>
-                        window.onload = function() {
-                            window.focus();
-                            window.print();
-                            setTimeout(function() { window.close(); }, 500);
-                        }
-                    <\/script>
                 </body>
                 </html>
-            `);
-            printWindow.document.close();
+            `;
+
+            // Usa um Iframe invisível para não ser bloqueado pelo celular
+            let iframe = document.getElementById('print-iframe');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'print-iframe';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
+
+            iframe.contentDocument.open();
+            iframe.contentDocument.write(cupomHtml);
+            iframe.contentDocument.close();
+
+            // Dá um pequeno delay para renderizar e chama a impressão do sistema
+            setTimeout(() => {
+                iframe.contentWindow.focus();
+                iframe.contentWindow.print();
+            }, 500);
         };
 
         const pizzasRef = collection(db, "pizzas");
