@@ -262,7 +262,7 @@
                 
                 <form id="payment-form" onsubmit="processPayment(event)">
                     <div class="form-group">
-                        <label for="cep">CEP de Entrega (Apenas até 7km de Amador Bueno)</label>
+                        <label for="cep">CEP de Entrega (Apenas até 9km de Amador Bueno)</label>
                         <input type="text" id="cep" placeholder="Ex: 00000-000" maxlength="9" oninput="buscarCEP()" required>
                     </div>
 
@@ -591,9 +591,10 @@
                     if (temCoordenadas) {
                         const distancia = calcularDistancia(LAT_PIZZARIA, LON_PIZZARIA, latCliente, lonCliente);
 
-                        if (distancia > 7) {
+                        // ===== MUDANÇA AQUI (7 para 9 km) =====
+                        if (distancia > 9) {
                             window.isDeliveryValid = false;
-                            Swal.fire({ icon: 'error', title: 'Fora da Área de Entrega 🛵🚫', text: `Distância: ${distancia.toFixed(1)} km. Nosso limite é 7 km.`, confirmButtonColor: '#ff4757' });
+                            Swal.fire({ icon: 'error', title: 'Fora da Área de Entrega 🛵🚫', text: `Distância: ${distancia.toFixed(1)} km. Nosso limite é 9 km.`, confirmButtonColor: '#ff4757' });
                             cepInput.value = ''; addressInput.value = '';
                         } else {
                             window.isDeliveryValid = true;
@@ -659,7 +660,8 @@
                 Swal.fire({
                     icon: 'error',
                     title: 'Endereço Inválido',
-                    text: 'Você precisa inserir um CEP válido e dentro da nossa área de entrega (7km) para concluir o pedido.',
+                    // ===== MUDANÇA AQUI NO TEXTO (7km para 9km) =====
+                    text: 'Você precisa inserir um CEP válido e dentro da nossa área de entrega (9km) para concluir o pedido.',
                     confirmButtonColor: '#ff4757'
                 });
                 return;
