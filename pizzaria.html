@@ -8,34 +8,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            /* Paleta PRO */
-            --bg-body: #f4f7fb; 
+            /* --- NOVA PALETA PIZZARIA ITALIANA --- */
+            --bg-body: #fdfdfc; /* Bege muito claro, quase branco */
             --bg-card: #ffffff;
-            --primary: #ef4444; 
-            --primary-hover: #dc2626;
-            --primary-light: #fee2e2;
-            --sidebar-bg: #0f172a; 
-            --sidebar-hover: #1e293b;
-            --sidebar-active: #38bdf8;
-            --text-main: #1e293b;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
             
-            /* Cores Semânticas */
-            --success: #10b981;
-            --success-bg: #d1fae5;
-            --warning: #f59e0b;
-            --warning-bg: #fef3c7;
-            --info: #3b82f6;
-            --info-bg: #dbeafe;
+            /* Cores Marca */
+            --primary: #e03131; /* Vermelho tomate vibrante */
+            --primary-hover: #b91c1c;
+            --primary-light: #fff5f5;
             
-            /* Sombras e Raios */
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --radius-md: 12px;
+            /* Sidebar e Acentos */
+            --sidebar-bg: #1a2e1a; /* Verde oliva escuro profundo */
+            --sidebar-hover: #264226;
+            --sidebar-active-text: #ffe066; /* Dourado claro */
+            
+            /* Cores de Texto */
+            --text-main: #2b2d30;
+            --text-muted: #787c82;
+            --border-color: #f1f3f5;
+            
+            /* Cores Semânticas Ajustadas */
+            --success: #2b8a3e; /* Verde manjericão */
+            --success-bg: #ebfbee;
+            --warning: #e8590c; /* Laranja massa assada */
+            --warning-bg: #fff4e6;
+            --info: #1971c2; /* Azul para info mantido para contraste */
+            --info-bg: #e7f5ff;
+            
+            /* Sombras, Raios e Animação */
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.03), 0 2px 4px rgba(0,0,0,0.02);
+            --shadow-lg: 0 10px 20px rgba(0,0,0,0.07);
+            --radius-md: 10px;
             --radius-lg: 16px;
-            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.2s ease;
         }
 
         /* Reset Base */
@@ -43,21 +49,21 @@
         body { background-color: var(--bg-body); color: var(--text-main); display: flex; min-height: 100vh; -webkit-font-smoothing: antialiased; }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #dbe1e8; border-radius: 10px; }
 
-        /* --- Sidebar PRO --- */
-        .sidebar { width: 260px; background-color: var(--sidebar-bg); color: #f8fafc; display: flex; flex-direction: column; padding: 24px 20px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; z-index: 100;}
+        /* --- Sidebar PRO COLORIDA --- */
+        .sidebar { width: 260px; background-color: var(--sidebar-bg); color: #f8fafc; display: flex; flex-direction: column; padding: 24px 20px; flex-shrink: 0; position: sticky; top: 0; height: 100vh; z-index: 100; box-shadow: 4px 0 15px rgba(0,0,0,0.05);}
         .sidebar-header { display: flex; align-items: center; gap: 12px; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .sidebar-brand { font-size: 1.25rem; font-weight: 700; color: white; display: flex; align-items: center; gap: 12px; text-decoration: none; letter-spacing: -0.5px;}
-        .sidebar-brand i { color: white; font-size: 1.2rem; background: var(--primary); padding: 10px; border-radius: 10px; }
+        .sidebar-brand { font-size: 1.3rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 12px; text-decoration: none; letter-spacing: -0.5px;}
+        .sidebar-brand i { color: white; font-size: 1.2rem; background: var(--primary); padding: 10px; border-radius: 12px; box-shadow: 0 4px 10px rgba(224, 49, 49, 0.3);}
         
         .sidebar-menu { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-        .sidebar-menu-item a { text-decoration: none; color: #94a3b8; display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-radius: 10px; font-weight: 500; font-size: 0.95rem; transition: var(--transition); cursor: pointer;}
+        .sidebar-menu-item a { text-decoration: none; color: #cdddc0; display: flex; align-items: center; gap: 14px; padding: 14px 18px; border-radius: 12px; font-weight: 500; font-size: 0.95rem; transition: var(--transition); cursor: pointer;}
         .sidebar-menu-item a:hover { background-color: var(--sidebar-hover); color: white; }
-        .sidebar-menu-item.active a { background-color: rgba(56, 189, 248, 0.1); color: var(--sidebar-active); font-weight: 600;}
+        .sidebar-menu-item.active a { background-color: rgba(255, 255, 255, 0.03); color: var(--sidebar-active-text); font-weight: 700; border: 1px solid rgba(255,255,255,0.05);}
         .sidebar-menu-item a i { font-size: 1.1rem; width: 20px; text-align: center; }
 
-        /* --- Main Content & SPA Navigation --- */
+        /* --- Main Content --- */
         .main-content { flex: 1; padding: 40px; max-width: 1400px; margin: 0 auto; width: 100%; overflow-y: auto;}
         
         /* Sistema de Abas */
@@ -67,110 +73,113 @@
 
         /* Top Header */
         .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;}
-        .top-header h1 { font-size: 1.8rem; font-weight: 700; color: var(--text-main); letter-spacing: -0.5px;}
+        .top-header h1 { font-size: 1.9rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.8px;}
+        .top-header h1 span { color: var(--primary); }
         .top-header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 4px; }
-        .back-link { color: var(--text-main); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; padding: 10px 16px; border-radius: 10px; background: var(--bg-card); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); transition: var(--transition); }
-        .back-link:hover { background-color: var(--bg-body); transform: translateY(-2px); box-shadow: var(--shadow-md);}
+        .back-link { color: var(--sidebar-bg); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 8px; font-size: 0.9rem; padding: 12px 18px; border-radius: 10px; background: var(--bg-card); box-shadow: var(--shadow-sm); border: 1px solid var(--border-color); transition: var(--transition); }
+        .back-link:hover { background-color: #fff; transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: #dbe1e8;}
 
-        /* --- Stats Cards --- */
+        /* --- Stats Cards MAIS COLORIDOS --- */
         .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
-        .stat-card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 20px; border: 1px solid rgba(0,0,0,0.02);}
-        .stat-icon { width: 60px; height: 60px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0;}
-        .stat-info h3 { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
-        .stat-info p { font-size: 1.8rem; font-weight: 700; color: var(--text-main); line-height: 1;}
+        .stat-card { background: var(--bg-card); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow-md); display: flex; align-items: center; gap: 20px; border: 1px solid rgba(0,0,0,0.02); transition: var(--transition); }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+        
+        .stat-icon { width: 60px; height: 60px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0;}
+        .stat-info h3 { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+        .stat-info p { font-size: 1.9rem; font-weight: 800; color: var(--text-main); line-height: 1; letter-spacing: -1px;}
 
-        /* --- Global Cards --- */
+        /* --- Global Cards MAIS COLORIDOS --- */
         .card { background: var(--bg-card); border-radius: var(--radius-lg); box-shadow: var(--shadow-md); border: 1px solid rgba(0,0,0,0.03); overflow: hidden; }
-        .card-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #fcfdfe;}
+        .card-header { padding: 20px 24px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #fdfdfd;}
         .card-title h2 { font-size: 1.15rem; color: var(--text-main); font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .card-title h2 i { color: var(--primary); }
         .card-title p { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
 
         /* --- Tabelas Funcionais --- */
         .table-responsive { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; min-width: 900px; }
-        th { background-color: transparent; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; padding: 16px 24px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border-color); }
-        td { padding: 18px 24px; border-bottom: 1px solid var(--border-color); vertical-align: middle; font-size: 0.95rem; }
+        table { width: 100%; border-collapse: collapse; min-width: 950px; }
+        th { background-color: transparent; color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.8px; padding: 18px 24px; text-align: left; font-weight: 600; border-bottom: 2px solid var(--border-color); }
+        td { padding: 20px 24px; border-bottom: 1px solid var(--border-color); vertical-align: middle; font-size: 0.95rem; }
         tbody tr { transition: var(--transition); }
-        tbody tr:hover { background-color: #f8fafc; }
+        tbody tr:hover { background-color: #fffbf5; } /* Hover em tom pastel quente */
         tbody tr:last-child td { border-bottom: none; }
 
-        /* Tags e Badges */
-        .items-container { display: flex; flex-wrap: wrap; gap: 6px; }
-        .item-pill { background-color: var(--bg-body); border: 1px solid var(--border-color); color: var(--text-main); padding: 6px 12px; border-radius: 6px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; font-weight: 500; }
-        .item-pill strong { color: var(--primary); font-weight: 700; }
+        /* Tags e Badges COLORIDOS */
+        .items-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        .item-pill { background-color: #fff5f5; border: 1px solid #ffc9c9; color: #b91c1c; padding: 7px 14px; border-radius: 8px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 8px; font-weight: 600; }
+        .item-pill strong { color: var(--primary); font-weight: 800; }
 
-        .badge { padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.5px; }
+        .badge { padding: 7px 14px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; letter-spacing: 0.5px; text-transform: uppercase;}
         .badge-pix { background-color: #ccfbf1; color: #0f766e; }
         .badge-card { background-color: var(--info-bg); color: #1d4ed8; }
-        .badge-money { background-color: var(--success-bg); color: #047857; }
+        .badge-money { background-color: var(--success-bg); color: var(--success); }
         
-        .payment-info { margin-top: 8px; font-size: 0.8rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 4px; }
-        .price-text { font-weight: 700; color: var(--text-main); font-size: 1.1rem; }
+        .payment-info { margin-top: 8px; font-size: 0.8rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 5px; }
+        .price-text { font-weight: 800; color: var(--text-main); font-size: 1.15rem; letter-spacing: -0.5px;}
         .time-cell { color: var(--text-muted); font-size: 0.85rem; font-weight: 500; display: flex; flex-direction: column; gap: 4px;}
 
-        /* --- Botões Funcionais --- */
-        .btn { padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.9rem; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px; }
-        .btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); opacity: 0.95; }
+        /* --- Botões Funcionais e COLORIDOS --- */
+        .btn { padding: 12px 20px; border: none; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 0.9rem; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05);}
+        .btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); opacity: 0.95; }
         .btn:active { transform: translateY(0); box-shadow: none; }
         
-        .btn-sm { padding: 8px 12px; font-size: 0.8rem; border-radius: 6px; }
-        .btn-icon { width: 36px; height: 36px; padding: 0; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem;}
+        .btn-sm { padding: 9px 14px; font-size: 0.8rem; border-radius: 8px; }
+        .btn-icon { width: 40px; height: 40px; padding: 0; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem;}
         
         .btn-primary { background-color: var(--primary); color: white; }
+        .btn-primary:hover { background-color: var(--primary-hover); }
         .btn-success { background-color: var(--success); color: white; }
+        .btn-info { background-color: var(--info); color: white; }
         .btn-outline { background-color: transparent; border: 1px solid var(--border-color); color: var(--text-main); box-shadow: var(--shadow-sm); }
-        .btn-outline:hover { background-color: var(--bg-body); border-color: #cbd5e1; }
+        .btn-outline:hover { background-color: #fff; border-color: #cbd5e1; color: var(--primary);}
         .btn-danger-outline { color: var(--primary); border: 1px solid var(--primary-light); background: transparent; }
         .btn-danger-outline:hover { background: var(--primary-light); }
 
         .action-buttons { display: flex; gap: 8px; flex-wrap: wrap;}
 
-        /* --- Formulários --- */
-        form { padding: 24px; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 24px; }
+        /* --- Formulários MAIS COLORIDOS --- */
+        form { padding: 30px; background-color: #fdfdfd; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 24px; }
         .form-group.full-width { grid-column: span 2; }
-        .form-group label { display: block; font-weight: 600; margin-bottom: 8px; color: var(--text-main); font-size: 0.85rem; }
-        input, textarea { width: 100%; padding: 12px 16px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; background-color: var(--bg-body); transition: var(--transition); color: var(--text-main); }
-        input:focus, textarea:focus { outline: none; border-color: var(--sidebar-active); background-color: white; box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2); }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 10px; color: var(--sidebar-bg); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px;}
+        input, textarea { width: 100%; padding: 14px 18px; border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.95rem; background-color: white; transition: var(--transition); color: var(--text-main); }
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); background-color: white; box-shadow: 0 0 0 4px rgba(224, 49, 49, 0.1); }
 
-        /* --- Componentes Extras (Modais, Toasts, Empty) --- */
-        .empty-state { text-align: center; padding: 60px 20px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 16px; }
-        .empty-state i { font-size: 3rem; color: #cbd5e1; }
+        /* --- Componentes Extras --- */
+        .empty-state { text-align: center; padding: 70px 20px; color: var(--text-muted); display: flex; flex-direction: column; align-items: center; gap: 20px; }
+        .empty-state i { font-size: 3.5rem; color: #dbe1e8; }
         
-        .receipt-modal { display: none; position: fixed; z-index: 5000; inset: 0; background-color: rgba(15, 23, 42, 0.85); align-items: center; justify-content: center; flex-direction: column; backdrop-filter: blur(4px); }
+        .receipt-modal { display: none; position: fixed; z-index: 5000; inset: 0; background-color: rgba(26, 46, 26, 0.9); align-items: center; justify-content: center; flex-direction: column; backdrop-filter: blur(5px); }
         .receipt-modal.active { display: flex; animation: fadeIn 0.3s ease; }
-        .receipt-modal img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: var(--shadow-lg); }
-        .close-receipt { position: absolute; top: 24px; right: 24px; background: white; color: var(--text-main); width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; font-size: 1.2rem; transition: var(--transition); }
+        .receipt-modal img { max-width: 90%; max-height: 80vh; border-radius: 12px; box-shadow: var(--shadow-lg); border: 5px solid white;}
+        .close-receipt { position: absolute; top: 24px; right: 24px; background: white; color: var(--sidebar-bg); width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; font-size: 1.3rem; transition: var(--transition); box-shadow: var(--shadow-md);}
         .close-receipt:hover { background: var(--primary); color: white; transform: rotate(90deg); }
 
-        /* TOAST NOTIFICATIONS */
-        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
-        .toast { background: var(--text-main); color: white; padding: 14px 20px; border-radius: 10px; font-size: 0.9rem; font-weight: 500; display: flex; align-items: center; gap: 12px; box-shadow: var(--shadow-lg); transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
+        /* TOAST NOTIFICATIONS MAIS COLORIDOS */
+        .toast-container { position: fixed; bottom: 24px; right: 24px; z-index: 9999; display: flex; flex-direction: column; gap: 12px; }
+        .toast { background: var(--sidebar-bg); color: white; padding: 16px 24px; border-radius: 12px; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-lg); transform: translateX(120%); transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); border: 1px solid rgba(255,255,255,0.1);}
         .toast.show { transform: translateX(0); }
-        .toast.success { border-left: 4px solid var(--success); }
-        .toast.error { border-left: 4px solid var(--primary); }
+        .toast.success { border-left: 5px solid var(--success); }
+        .toast.error { border-left: 5px solid var(--primary); }
 
-        /* Responsividade */
+        /* Responsividade Ajustada */
         @media (max-width: 1024px) {
-            .sidebar { width: 80px; padding: 20px 10px; align-items: center;}
+            .sidebar { width: 90px; padding: 20px 10px; align-items: center;}
             .sidebar-brand span, .sidebar-menu-item a span { display: none; }
-            .sidebar-brand i { margin: 0; }
-            .sidebar-menu-item a { justify-content: center; padding: 12px; }
-            .sidebar-menu-item a i { margin: 0; font-size: 1.3rem;}
+            .sidebar-brand i { margin: 0; padding: 12px; border-radius: 14px;}
+            .sidebar-menu-item a { justify-content: center; padding: 16px; border-radius: 12px; }
+            .sidebar-menu-item a i { margin: 0; font-size: 1.4rem;}
         }
         @media (max-width: 768px) {
             body { flex-direction: column; }
-            .sidebar { width: 100%; height: auto; padding: 12px 16px; flex-direction: row; align-items: center; border-bottom: 1px solid var(--border-color); z-index: 100;}
+            .sidebar { width: 100%; height: auto; padding: 12px 16px; flex-direction: row; align-items: center; border-bottom: 1px solid var(--border-color); border-right: none; position: relative; }
             .sidebar-header { margin: 0; padding: 0; border: none; }
-            .sidebar-menu { flex-direction: row; margin-left: auto; gap: 4px; }
-            .sidebar-menu-item a { padding: 10px; border-radius: 8px;}
-            .main-content { padding: 20px; }
+            .sidebar-menu { flex-direction: row; margin-left: auto; gap: 6px; }
+            .sidebar-menu-item a { padding: 12px; border-radius: 10px;}
+            .main-content { padding: 24px; }
             .top-header { flex-direction: column; align-items: flex-start; gap: 16px; }
-            .form-grid { grid-template-columns: 1fr; }
-            .form-group.full-width { grid-column: span 1; }
-            .toast-container { bottom: 16px; right: 16px; left: 16px; align-items: center; }
-            .toast { width: 100%; justify-content: center; transform: translateY(120%); }
-            .toast.show { transform: translateY(0); }
+            .form-grid { grid-template-columns: 1fr; gap: 16px;}
+            .toast-container { bottom: 16px; right: 16px; left: 16px; }
         }
     </style>
 </head>
@@ -180,12 +189,12 @@
         <div class="sidebar-header">
             <a href="#" class="sidebar-brand">
                 <i class="fas fa-pizza-slice"></i>
-                <span>AdminBDV</span>
+                <span>Admin</span>
             </a>
         </div>
         <ul class="sidebar-menu">
             <li class="sidebar-menu-item active">
-                <a onclick="switchTab('tab-dashboard', this)"><i class="fas fa-satellite-dish"></i><span>Fila ao Vivo</span></a>
+                <a onclick="switchTab('tab-dashboard', this)"><i class="fas fa-stream"></i><span>Fila ao Vivo</span></a>
             </li>
             <li class="sidebar-menu-item">
                 <a onclick="switchTab('tab-historico', this)"><i class="fas fa-history"></i><span>Histórico</span></a>
@@ -201,37 +210,37 @@
         <div class="top-header">
             <div>
                 <h1 id="page-title">Fila de Pedidos</h1>
-                <p id="page-subtitle">Acompanhe os pedidos em tempo real.</p>
+                <p id="page-subtitle">Acompanhe a cozinha em tempo real.</p>
             </div>
-            <a href="index.html" class="back-link"><i class="fas fa-external-link-alt"></i> Ver Loja do Cliente</a>
+            <a href="index.html" class="back-link"><i class="fas fa-store"></i> Ir para a Loja</a>
         </div>
         
         <div id="tab-dashboard" class="page-section active">
             <div class="stats-grid">
-                <div class="stat-card">
+                <div class="stat-card" style="border-top: 4px solid var(--info);">
                     <div class="stat-icon" style="background: var(--info-bg); color: var(--info);">
-                        <i class="fas fa-bell"></i>
+                        <i class="fas fa-concierge-bell"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Pedidos Pendentes</h3>
+                        <h3>Pedidos Chegando</h3>
                         <p id="stat-pedidos">0</p>
                     </div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" style="border-top: 4px solid var(--warning);">
                     <div class="stat-icon" style="background: var(--warning-bg); color: var(--warning);">
-                        <i class="fas fa-box-open"></i>
+                        <i class="fas fa-fire"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Pizzas na Fila</h3>
+                        <h3>Pizzas no Forno</h3>
                         <p id="stat-pizzas">0</p>
                     </div>
                 </div>
-                <div class="stat-card">
+                <div class="stat-card" style="border-top: 4px solid var(--success);">
                     <div class="stat-icon" style="background: var(--success-bg); color: var(--success);">
-                        <i class="fas fa-wallet"></i>
+                        <i class="fas fa-cash-register"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>Faturamento (Hoje)</h3>
+                        <h3>Vendas Hoje</h3>
                         <p id="stat-lucro-total" style="color: var(--success);">R$ 0,00</p>
                     </div>
                 </div>
@@ -240,20 +249,20 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>Monitor de Preparo <span class="badge" style="background: var(--primary-light); color: var(--primary); margin-left: 8px; animation: pulse 2s infinite;">Ao Vivo</span></h2>
+                        <h2><i class="fas fa-satellite-dish"></i> Monitor da Cozinha (Ao Vivo)</h2>
                     </div>
                 </div>
                 <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
-                                <th>Chegada</th>
+                                <th>Horário</th>
                                 <th>Cliente / Endereço</th>
-                                <th>Resumo do Pedido</th>
+                                <th>Sabor / Detalhes</th>
                                 <th>Pagamento</th>
-                                <th>Valor Total</th>
+                                <th>Total</th>
                                 <th style="text-align: right;">Ações</th>
-                            </tr>
+                            }
                         </thead>
                         <tbody id="orders-table-body">
                             <tr><td colspan="6"><div class="empty-state"><i class="fas fa-circle-notch fa-spin"></i><p>Sincronizando com o restaurante...</p></div></td></tr>
@@ -267,11 +276,11 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2><i class="fas fa-check-circle" style="color: var(--success);"></i> Vendas Concluídas</h2>
-                        <p>Registro de todos os pedidos finalizados e faturados.</p>
+                        <h2><i class="fas fa-file-invoice-dollar"></i> Vendas Concluídas</h2>
+                        <p>Relatório completo de pedidos finalizados.</p>
                     </div>
                     <button class="btn btn-sm btn-danger-outline" onclick="clearProfits()">
-                        <i class="fas fa-trash-alt"></i> Limpar Dados
+                        <i class="fas fa-trash-alt"></i> Limpar Histórico
                     </button>
                 </div>
                 <div class="table-responsive">
@@ -280,8 +289,8 @@
                             <tr>
                                 <th>Data de Conclusão</th>
                                 <th>Itens Vendidos</th>
-                                <th>Método de Pagto</th>
-                                <th>Valor Recebido</th>
+                                <th>Forma de Pagto</th>
+                                <th>Valor</th>
                             </tr>
                         </thead>
                         <tbody id="profits-table-body">
@@ -293,34 +302,34 @@
         </div>
 
         <div id="tab-cardapio" class="page-section">
-            <div class="card" style="margin-bottom: 24px;">
+            <div class="card" style="margin-bottom: 24px; border-top: 4px solid var(--primary);">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>Adicionar Novo Item</h2>
-                        <p>Crie uma nova pizza para aparecer na loja.</p>
+                        <h2><i class="fas fa-plus-circle"></i> Novo Sabor</h2>
+                        <p>Cadastre uma pizza no sistema.</p>
                     </div>
                 </div>
                 <form id="add-pizza-form">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="nome">Nome do Sabor</label>
-                            <input type="text" id="nome" required placeholder="Ex: Calabresa Especial">
+                            <label for="nome">Nome da Pizza</label>
+                            <input type="text" id="nome" required placeholder="Ex: Calabresa Acebolada">
                         </div>
                         <div class="form-group">
                             <label for="preco">Preço de Venda (R$)</label>
-                            <input type="number" id="preco" step="0.01" required placeholder="0.00">
+                            <input type="number" id="preco" step="0.01" required placeholder="59.90">
                         </div>
                         <div class="form-group full-width">
-                            <label for="descricao">Descrição (Ingredientes)</label>
-                            <input type="text" id="descricao" required placeholder="Molho, muçarela, calabresa fatiada, cebola e orégano.">
+                            <label for="descricao">Descrição / Ingredientes</label>
+                            <input type="text" id="descricao" required placeholder="Molho, muçarela, calabresa, cebola, orégano.">
                         </div>
                         <div class="form-group full-width">
-                            <label for="imagem">Link da Imagem (URL)</label>
-                            <input type="url" id="imagem" required placeholder="https://site.com/imagem.jpg">
+                            <label for="imagem">Link da Imagem</label>
+                            <input type="url" id="imagem" required placeholder="https://...">
                         </div>
                     </div>
                     <div style="display: flex; justify-content: flex-end;">
-                        <button type="submit" id="btn-salvar-pizza" class="btn btn-primary"><i class="fas fa-plus"></i> Salvar no Cardápio</button>
+                        <button type="submit" id="btn-salvar-pizza" class="btn btn-primary"><i class="fas fa-check"></i> Salvar Sabor</button>
                     </div>
                 </form>
             </div>
@@ -328,14 +337,14 @@
             <div class="card">
                 <div class="card-header">
                     <div class="card-title">
-                        <h2>Itens Atuais na Loja</h2>
+                        <h2>Cardápio Atual</h2>
                     </div>
                 </div>
                 <div class="table-responsive">
                     <table>
                         <thead>
                             <tr>
-                                <th>Sabor / Detalhes</th>
+                                <th>Sabor / Ingredientes</th>
                                 <th>Preço</th>
                                 <th style="text-align: right;">Ação</th>
                             </tr>
@@ -374,25 +383,21 @@
 
         // --- SISTEMA DE NAVEGAÇÃO (SPA) ---
         window.switchTab = function(tabId, element) {
-            // Oculta todas as abas
             document.querySelectorAll('.page-section').forEach(tab => tab.classList.remove('active'));
-            // Remove 'active' do menu lateral
             document.querySelectorAll('.sidebar-menu-item').forEach(item => item.classList.remove('active'));
             
-            // Mostra a aba selecionada e marca o menu
             document.getElementById(tabId).classList.add('active');
             element.parentElement.classList.add('active');
 
-            // Atualiza os Títulos no Header
             const titleEl = document.getElementById('page-title');
             const subtitleEl = document.getElementById('page-subtitle');
             
             if(tabId === 'tab-dashboard') {
-                titleEl.innerText = 'Fila de Pedidos'; subtitleEl.innerText = 'Acompanhe os pedidos em tempo real.';
+                titleEl.innerText = 'Fila de Pedidos'; subtitleEl.innerText = 'Acompanhe a cozinha em tempo real.';
             } else if(tabId === 'tab-historico') {
-                titleEl.innerText = 'Histórico Financeiro'; subtitleEl.innerText = 'Relatório de vendas concluídas.';
+                titleEl.innerText = 'Histórico Financeiro'; subtitleEl.innerText = 'Relatório completo de pedidos finalizados.';
             } else {
-                titleEl.innerText = 'Gestão de Cardápio'; subtitleEl.innerText = 'Controle os produtos visíveis na loja.';
+                titleEl.innerText = 'Gestão de Cardápio'; subtitleEl.innerText = 'Cadastre ou remova sabores do sistema.';
             }
         };
 
@@ -402,18 +407,14 @@
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
             
-            const icon = type === 'success' ? '<i class="fas fa-check-circle" style="color: var(--success);"></i>' : '<i class="fas fa-exclamation-circle" style="color: var(--primary);"></i>';
+            const icon = type === 'success' ? '<i class="fas fa-check-circle" style="color: var(--success);"></i>' : '<i class="fas fa-pizza-slice" style="color: var(--primary);"></i>';
             toast.innerHTML = `${icon} <span>${message}</span>`;
             
             container.appendChild(toast);
-            
-            // Força o reflow para a animação funcionar
             setTimeout(() => toast.classList.add('show'), 10);
-            
-            // Remove após 3 segundos
             setTimeout(() => {
                 toast.classList.remove('show');
-                setTimeout(() => toast.remove(), 400); // Tempo da transição CSS
+                setTimeout(() => toast.remove(), 400);
             }, 3000);
         };
 
@@ -426,7 +427,6 @@
         function formatarData(dataStr) {
             if(!dataStr) return '';
             if(dataStr.includes('/')) {
-                // Divide a data e hora em duas linhas para a tabela ficar mais limpa
                 let partes = dataStr.split(' ');
                 if(partes.length === 2) return `<strong>${partes[1]}</strong><span>${partes[0]}</span>`;
                 return dataStr;
@@ -445,9 +445,9 @@
                 html += `<div class="badge badge-pix"><i class="fab fa-pix"></i> PIX</div>`;
                 html += `<div class="payment-info">`;
                 if (order.comprovanteData) {
-                    html += `<button class="btn btn-sm btn-outline" onclick="viewReceipt('${order.id}')" style="background: white;"><i class="fas fa-file-invoice"></i> Ver Recibo</button>`;
+                    html += `<button class="btn btn-sm btn-outline" onclick="viewReceipt('${order.id}')"><i class="fas fa-receipt"></i> Ver Recibo</button>`;
                 } else {
-                    html += `<span style="color: var(--primary); font-weight: 600;"><i class="fas fa-exclamation-triangle"></i> Faltando anexo</span>`;
+                    html += `<span style="color: var(--primary); font-weight: 700;"><i class="fas fa-exclamation-circle"></i> Sem Recibo</span>`;
                 }
                 html += `</div>`;
             } 
@@ -476,7 +476,6 @@
             document.getElementById('stat-pizzas').innerText = totalPizzas;
         }
 
-        // --- MONITORAMENTO DE PEDIDOS ---
         const pedidosRef = collection(db, "pedidos");
         
         onSnapshot(pedidosRef, (snapshot) => {
@@ -486,9 +485,9 @@
                 snapshot.docChanges().forEach(change => {
                     if (change.type === "added" && !isPrimeiraCarga) {
                         audioNotificacao.play().catch(e => console.log("Som bloqueado."));
-                        showToast("Novo pedido recebido!", "success");
+                        showToast("🍕 Novo pedido recebido!", "success");
                         if (Notification.permission === "granted") {
-                            new Notification("🍕 Novo Pedido!", { body: "Verifique o painel." });
+                            new Notification("Pizzaria: Novo Pedido!", { body: "Verifique a Fila ao Vivo." });
                         }
                     }
                 });
@@ -501,7 +500,7 @@
             updateStats(window.currentOrders);
 
             if (window.currentOrders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-glass-cheers" style="color: var(--success);"></i><p style="font-weight: 500; color: var(--text-main); font-size: 1.1rem;">A fila está limpa!</p><p style="font-size: 0.9rem;">Aguardando novos pedidos...</p></div></td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><i class="fas fa-clipboard-check" style="color: var(--success);"></i><p style="font-weight: 700; color: var(--success); font-size: 1.2rem;">Fila Zerada!</p><p style="font-size: 0.95rem;">Nenhum pedido pendente na cozinha.</p></div></td></tr>`;
                 return;
             }
 
@@ -509,13 +508,13 @@
             [...window.currentOrders].reverse().forEach(order => {
                 const itemsPills = order.items 
                     ? `<div class="items-container">` + order.items.map(i => `<span class="item-pill"><strong>${i.quantity || 1}x</strong> ${i.name}</span>`).join('') + `</div>`
-                    : '<span style="color: var(--text-muted);">Sem itens listados</span>';
+                    : '<span style="color: var(--text-muted);">Itens não detalhados</span>';
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="time-cell">${formatarData(order.date)}</td>
                     <td>
-                        <div style="font-weight: 600; color: var(--text-main); margin-bottom: 2px;">${order.nomeCliente || 'Cliente'}</div>
+                        <div style="font-weight: 700; color: var(--text-main); margin-bottom: 3px;">${order.nomeCliente || 'Cliente'}</div>
                         <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4;">${order.address || 'Retirada no Balcão'}</div>
                     </td>
                     <td>${itemsPills}</td>
@@ -533,7 +532,6 @@
             });
         });
 
-        // --- MONITORAMENTO DE LUCROS (HISTÓRICO) ---
         const lucrosRef = collection(db, "lucros");
         onSnapshot(lucrosRef, (snapshot) => {
             const tbody = document.getElementById('profits-table-body');
@@ -542,7 +540,7 @@
             snapshot.forEach(docSnap => lucros.push({ id: docSnap.id, ...docSnap.data() }));
 
             if (lucros.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="fas fa-inbox"></i><p>Nenhuma venda registrada hoje.</p></div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4"><div class="empty-state"><i class="fas fa-wallet"></i><p>Nenhuma venda registrada ainda.</p></div></td></tr>';
                 document.getElementById('stat-lucro-total').innerText = 'R$ 0,00';
                 return;
             }
@@ -558,19 +556,19 @@
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td class="time-cell" style="flex-direction: row; gap: 8px; align-items: center;">${formatarData(venda.dateConcluded)}</td>
-                    <td style="font-size: 0.85rem; color: var(--text-muted); max-width: 300px;">${venda.items || 'Itens'}</td>
+                    <td style="font-size: 0.85rem; color: var(--text-muted); max-width: 350px;">${venda.items || 'Itens'}</td>
                     <td>${getSimplePaymentBadge(venda.paymentMethod || '')}</td>
-                    <td class="price-text" style="color: var(--text-main);">R$ ${parseFloat(valorNumerico).toFixed(2).replace('.', ',')}</td>
+                    <td class="price-text" style="color: var(--success);">R$ ${parseFloat(valorNumerico).toFixed(2).replace('.', ',')}</td>
                 `;
                 tbody.appendChild(tr);
             });
             document.getElementById('stat-lucro-total').innerText = `R$ ${totalAcumulado.toFixed(2).replace('.', ',')}`;
         });
 
-        // --- FUNÇÕES DE AÇÃO ---
+        // Funções de Ação
         window.finishOrder = async function(orderId) {
             const orderToFinish = window.currentOrders.find(o => o.id === orderId);
-            if (orderToFinish && confirm('O pedido foi entregue? Ele será movido para o Histórico.')) {
+            if (orderToFinish && confirm('Mover este pedido para o Histórico de concluídos?')) {
                 try {
                     await addDoc(lucrosRef, {
                         dateConcluded: new Date().toLocaleString('pt-BR'),
@@ -579,15 +577,13 @@
                         paymentMethod: orderToFinish.paymentMethod
                     });
                     await deleteDoc(doc(db, "pedidos", orderId));
-                    showToast("Pedido finalizado com sucesso!", "success");
-                } catch (error) { 
-                    showToast("Erro ao finalizar pedido.", "error"); 
-                }
+                    showToast("Pedido finalizado!", "success");
+                } catch (error) { showToast("Erro ao finalizar pedido.", "error"); }
             }
         };
 
         window.rejectOrder = async function(orderId) { 
-            if(confirm('Atenção: Isso cancelará e apagará o pedido permanentemente. Continuar?')) {
+            if(confirm('Atenção: Isso CANCELARÁ e apagará o pedido permanentemente. Continuar?')) {
                 try {
                     await deleteDoc(doc(db, "pedidos", orderId)); 
                     showToast("Pedido cancelado.", "error");
@@ -596,16 +592,15 @@
         };
 
         window.clearProfits = async function() {
-            if(confirm('PERIGO: Isso apagará todo o histórico financeiro. Não pode ser desfeito. Tem certeza?')) {
+            if(confirm('PERIGO: Isso apagará TODO o histórico financeiro permanentemente. Tem certeza?')) {
                 const querySnapshot = await getDocs(lucrosRef);
                 querySnapshot.forEach(async (documentSnap) => {
                     await deleteDoc(doc(db, "lucros", documentSnap.id));
                 });
-                showToast("Histórico limpo com sucesso.", "success");
+                showToast("Histórico limpo.", "success");
             }
         };
 
-        // --- MODAL DE RECIBO ---
         window.viewReceipt = function(orderId) {
             const order = window.currentOrders.find(o => o.id === orderId);
             if (order && order.comprovanteData) {
@@ -619,7 +614,6 @@
         };
         document.addEventListener('keydown', function(event) { if (event.key === 'Escape') closeReceipt(); });
 
-        // --- IMPRESSÃO ---
         window.printOrder = function(orderId) {
             const order = window.currentOrders.find(o => o.id === orderId);
             if (!order) return;
@@ -656,14 +650,13 @@
             setTimeout(() => { iframe.contentWindow.focus(); iframe.contentWindow.print(); }, 500);
         };
 
-        // --- GESTÃO DO CARDÁPIO ---
         const pizzasRef = collection(db, "pizzas");
         onSnapshot(pizzasRef, (snapshot) => {
             const tbody = document.getElementById('pizza-table-body');
             tbody.innerHTML = '';
             
             if(snapshot.empty) {
-                tbody.innerHTML = '<tr><td colspan="3"><div class="empty-state"><p>Cardápio vazio.</p></div></td></tr>';
+                tbody.innerHTML = '<tr><td colspan="3"><div class="empty-state"><p>Nenhuma pizza cadastrada.</p></div></td></tr>';
                 return;
             }
 
@@ -686,7 +679,7 @@
         document.getElementById('add-pizza-form').addEventListener('submit', async function(e) {
             e.preventDefault(); 
             const btn = document.getElementById('btn-salvar-pizza');
-            btn.disabled = true; btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Salvando...';
+            btn.disabled = true; btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Salvando...';
             
             try {
                 await addDoc(pizzasRef, {
@@ -696,18 +689,16 @@
                     image: document.getElementById('imagem').value
                 });
                 this.reset(); 
-                showToast("Pizza adicionada ao cardápio!", "success");
-            } catch(error) { 
-                showToast('Erro ao salvar pizza.', 'error'); 
-            } 
-            finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-plus"></i> Salvar no Cardápio'; }
+                showToast("Sabor cadastrado!", "success");
+            } catch(error) { showToast('Erro ao salvar sabor.', 'error'); } 
+            finally { btn.disabled = false; btn.innerHTML = '<i class="fas fa-check"></i> Salvar Sabor'; }
         });
 
         window.deletePizza = async function(id) { 
-            if(confirm('Remover definitivamente este item do cardápio?')) {
+            if(confirm('Excluir este sabor permanentemente do cardápio?')) {
                 try {
                     await deleteDoc(doc(db, "pizzas", id)); 
-                    showToast("Pizza removida com sucesso.", "success");
+                    showToast("Sabor removido.", "success");
                 } catch(e) { showToast("Erro ao remover.", "error");}
             }
         };
