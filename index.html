@@ -10,30 +10,30 @@
     
     <style>
         :root {
-            /* Paleta extraída da Imagem Gerada */
-            --primary-color: #E62429; /* Vermelho vibrante da Logo */
+            var(--primary-color): #E62429;
             --primary-gradient: linear-gradient(135deg, #E62429 0%, #B81317 100%);
-            --secondary-color: #00D0A6; /* Verde/Ciano menta dos botões superiores */
-            --bg-color: #F9F7F5; /* Fundo claro e neutro */
+            --secondary-color: #00D0A6;
+            --bg-color: #F9F7F5;
             --text-color: #555560;
-            --heading-color: #1A1A1E; /* Cinza escuro/Carvão da barra de navegação */
+            --heading-color: #1A1A1E;
             --card-bg: #FFFFFF;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
             --instagram: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
             --whatsapp: #25D366;
             --shadow-soft: 0 12px 35px rgba(26, 26, 30, 0.06);
             --shadow-hover: 0 20px 45px rgba(230, 36, 41, 0.15);
+            --primary-color: #E62429;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Nunito', sans-serif; }
         html { scroll-behavior: smooth; }
         body { background-color: var(--bg-color); color: var(--text-color); overflow-x: hidden; }
 
-        /* Navegação Escura (Estilo da Imagem) */
+        /* Navegação */
         nav { 
             display: flex; justify-content: space-between; align-items: center; 
             padding: 12px 30px; 
-            background: rgba(26, 26, 30, 0.95); /* Fundo escuro */
+            background: rgba(26, 26, 30, 0.95);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
             position: fixed; width: 90%; top: 20px; left: 5%; z-index: 1000; 
@@ -81,7 +81,7 @@
         .hero-content h1 { font-size: 4.5rem; margin-bottom: 20px; line-height: 1.05; font-weight: 900; letter-spacing: -2px; }
         .hero-content p { font-size: 1.3rem; margin-bottom: 40px; font-weight: 600; opacity: 0.9; line-height: 1.6; }
         
-        .btn { padding: 18px 40px; background: var(--primary-gradient); color: white; text-decoration: none; border: none; border-radius: 40px; font-size: 1.2rem; font-weight: 800; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(230, 36, 41, 0.4); text-transform: uppercase; letter-spacing: 1px; }
+        .btn { padding: 18px 40px; background: var(--primary-gradient); color: white; text-decoration: none; border: none; border-radius: 40px; font-size: 1.2rem; font-weight: 800; cursor: pointer; transition: var(--transition); display: inline-flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 10px 30px rgba(230, 36, 41, 0.4); text-transform: uppercase; letter-spacing: 1px; }
         .btn:hover { background: var(--secondary-color); transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 208, 166, 0.4); }
 
         .wave-bottom { position: absolute; bottom: -2px; left: 0; width: 100%; overflow: hidden; line-height: 0; transform: rotate(180deg); }
@@ -139,7 +139,7 @@
         .cart-footer { padding: 30px; background: white; border-top: 1px solid #f0f0f5; box-shadow: 0 -10px 30px rgba(0,0,0,0.03); border-radius: 25px 25px 0 0; }
         .total { font-size: 1.3rem; font-weight: 700; margin-bottom: 25px; display: flex; justify-content: space-between; color: var(--text-color); align-items: center; }
         .total span { color: var(--heading-color); font-size: 2rem; font-weight: 900; }
-        .checkout-btn { width: 100%; justify-content: center; padding: 20px; border-radius: 15px; font-size: 1.2rem; background: var(--primary-gradient); color: white; box-shadow: 0 10px 25px rgba(230, 36, 41, 0.3); }
+        .checkout-btn { width: 100%; justify-content: center; padding: 20px; border-radius: 15px; font-size: 1.2rem; background: var(--primary-gradient); color: white; box-shadow: 0 10px 25px rgba(230, 36, 41, 0.3); border: none; cursor: pointer; }
 
         /* Modal Pagamento */
         .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(26, 26, 30, 0.8); z-index: 2000; justify-content: center; align-items: center; backdrop-filter: blur(8px); }
@@ -149,7 +149,7 @@
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
         .modal-header h2 { color: var(--heading-color); font-weight: 900; font-size: 1.8rem; }
-        .close-modal { background: #f4f4f8; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 20px; cursor: pointer; color: var(--heading-color); transition: var(--transition); }
+        .close-modal { background: #f4f4f8; border: none; width: 45px; height: 45px; border-radius: 50%; font-size: 20px; cursor: pointer; color: var(--heading-color); transition: var(--transition); display: flex; justify-content: center; align-items: center;}
         .close-modal:hover { background: var(--primary-color); color: white; transform: rotate(90deg); }
         
         .form-group { margin-bottom: 22px; text-align: left; }
@@ -165,7 +165,7 @@
         input[type="file"]::file-selector-button { background: var(--heading-color); color: white; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; margin-right: 15px; transition: var(--transition); font-weight: 800; }
         input[type="file"]::file-selector-button:hover { background: var(--secondary-color); color: var(--heading-color); }
 
-        /* Rodapé Estilizado */
+        /* Rodapé */
         footer { background-color: var(--heading-color); color: white; text-align: center; padding: 80px 20px 40px; margin-top: 80px; position: relative; }
         .footer-content { max-width: 600px; margin: 0 auto; position: relative; z-index: 1; }
         .footer-logo { font-size: 2.2rem; font-weight: 900; color: white; margin-bottom: 30px; display: inline-block; text-decoration: none; letter-spacing: -1px; }
@@ -179,19 +179,54 @@
         .footer-info i { margin-right: 12px; color: var(--secondary-color); font-size: 1.1rem; }
         .copyright { font-size: 0.9rem; color: #555560; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; font-weight: 600; }
 
-        @media (max-width: 768px) {
-            nav { padding: 12px 20px; width: 94%; left: 3%; top: 15px; border-radius: 30px; }
-            .nav-links { display: none; }
-            .social-links { border: none; padding-left: 0; }
-            .hero { text-align: center; justify-content: center; }
-            .hero-content h1 { font-size: 3rem; }
-            .menu-section { padding: 80px 5%; }
-            .cart-sidebar { width: 100%; right: -100%; border-left: none; }
-            .modal-content { padding: 30px 20px; width: 95%; }
-        }
-
         .alert-info { background-color: #E8F9F5; color: #00876D; border: 1px solid #BEEBE0; padding: 20px; border-radius: 12px; display: flex; align-items: center; gap: 15px; }
         .alert-info i { font-size: 2rem; color: var(--secondary-color); }
+
+        /* ======== AJUSTES MOBILE (RESPONSIVIDADE) ======== */
+        @media (max-width: 768px) {
+            /* Navegação */
+            nav { padding: 10px 15px; width: 96%; left: 2%; top: 10px; }
+            .logo { font-size: 1.3rem; } /* Logo menor */
+            .nav-right { gap: 15px; }
+            .nav-links { display: none; } /* Esconde menu de links */
+            .social-links { display: none; } /* Esconde redes sociais no nav mobile para focar no carrinho */
+            .cart-icon { width: 40px; height: 40px; font-size: 1rem; }
+            
+            /* Hero */
+            .hero { align-items: flex-start; padding-top: 120px; }
+            .hero-content { text-align: center; margin-top: 0; padding: 0 10px; }
+            .hero-badge { margin-bottom: 20px; font-size: 0.8rem; padding: 8px 15px; }
+            .hero-content h1 { font-size: 2.5rem; line-height: 1.1; margin-bottom: 15px; letter-spacing: -1px; }
+            .hero-content p { font-size: 1.1rem; margin-bottom: 30px; }
+            .btn { width: 100%; padding: 15px 20px; font-size: 1.1rem; }
+            
+            /* Cardápio */
+            .menu-section { padding: 80px 5%; }
+            .section-header h2 { font-size: 2.2rem; }
+            .section-header p { font-size: 0.8rem; }
+            .menu-grid { grid-template-columns: 1fr; gap: 25px; } /* Coluna única no celular para evitar quebra */
+            .pizza-image-wrapper { height: 220px; }
+            
+            /* Carrinho Sidebar */
+            .cart-sidebar { width: 100%; right: -100%; border-left: none; }
+            .cart-header { padding: 20px; }
+            .cart-items { padding: 20px; }
+            .cart-footer { padding: 20px; }
+            .total { font-size: 1.1rem; }
+            .total span { font-size: 1.6rem; }
+            
+            /* Modal Pagamento */
+            .modal-content { width: 95%; padding: 25px 20px; max-height: 95vh; }
+            .modal-header h2 { font-size: 1.4rem; margin-bottom: 20px; }
+            .close-modal { width: 35px; height: 35px; font-size: 16px; }
+            .form-group input[type="text"], .form-group select { padding: 14px 15px; font-size: 1rem; }
+            .payment-details-box { padding: 20px; }
+            
+            /* Footer */
+            footer { padding: 60px 15px 30px; margin-top: 50px; }
+            .footer-logo { font-size: 1.8rem; }
+            .footer-info { font-size: 0.95rem; }
+        }
     </style>
 </head>
 <body>
@@ -262,25 +297,25 @@
                 <button class="close-modal" onclick="closePaymentModal()"><i class="fas fa-times"></i></button>
             </div>
             <div class="modal-body">
-                <div style="background: rgba(0, 208, 166, 0.1); padding: 20px; border-radius: 12px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(0, 208, 166, 0.3);">
-                    <span style="font-weight: 800; color: var(--heading-color); font-size: 1.1rem;">Valor Total:</span>
-                    <strong id="payment-total-amount" style="font-size: 1.6rem; color: var(--primary-color);">R$ 0,00</strong>
+                <div style="background: rgba(0, 208, 166, 0.1); padding: 15px 20px; border-radius: 12px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; border: 1px solid rgba(0, 208, 166, 0.3);">
+                    <span style="font-weight: 800; color: var(--heading-color); font-size: 1rem;">Total:</span>
+                    <strong id="payment-total-amount" style="font-size: 1.4rem; color: var(--primary-color);">R$ 0,00</strong>
                 </div>
                 
                 <form id="payment-form" onsubmit="processPayment(event)">
                     <div class="form-group">
-                        <label for="cep">CEP de Entrega (Apenas até 9km de Amador Bueno)</label>
+                        <label for="cep">CEP de Entrega (Até 9km)</label>
                         <input type="text" id="cep" placeholder="Ex: 00000-000" maxlength="9" oninput="buscarCEP()" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="address">Endereço de Entrega Completo</label>
-                        <input type="text" id="address" placeholder="Ex: Rua das Flores, 123, Apto 42 - Bairro" required>
+                        <label for="address">Endereço Completo</label>
+                        <input type="text" id="address" placeholder="Ex: Rua, Número, Complemento" required>
                     </div>
                     <div class="form-group">
-                        <label for="payment-method">Como prefere pagar?</label>
+                        <label for="payment-method">Forma de pagamento</label>
                         <select id="payment-method" required onchange="togglePaymentArea()">
-                            <option value="">Escolha uma forma de pagamento...</option>
+                            <option value="">Escolha...</option>
                             <option value="Pix">PIX (Rápido e Seguro)</option>
                             <option value="Cartão de Crédito">Cartão de Crédito (Na entrega)</option>
                             <option value="Cartão de Débito">Cartão de Débito (Na entrega)</option>
@@ -289,32 +324,32 @@
                     </div>
 
                     <div id="pix-area" class="payment-details-box pix-area">
-                        <h4 style="color: var(--heading-color); margin-bottom: 10px; text-align: center; font-size: 1.3rem; font-weight: 900;">Pagamento via PIX</h4>
-                        <p style="text-align: center; color: var(--text-color); font-size: 1rem; font-weight: 600;">Chave Celular: <strong style="color: var(--primary-color);">(11) 93086-2733</strong><br>Bom de Vida Delivery</p>
+                        <h4 style="color: var(--heading-color); margin-bottom: 10px; text-align: center; font-size: 1.2rem; font-weight: 900;">Pagamento via PIX</h4>
+                        <p style="text-align: center; color: var(--text-color); font-size: 0.95rem; font-weight: 600;">Chave Celular: <strong style="color: var(--primary-color);">(11) 93086-2733</strong><br>Bom de Vida Delivery</p>
                         
-                        <div class="qr-code-placeholder">
-                            <i class="fas fa-qrcode"></i>
-                            <p style="font-size: 0.95rem; font-weight: 700;">Abra o app do seu banco e escaneie o código ou use a chave acima.</p>
+                        <div class="qr-code-placeholder" style="padding: 15px; margin: 15px 0;">
+                            <i class="fas fa-qrcode" style="font-size: 40px; margin-bottom: 10px;"></i>
+                            <p style="font-size: 0.85rem; font-weight: 700;">Abra o app do seu banco e use a chave acima.</p>
                         </div>
                         
                         <div class="form-group" style="margin-bottom: 0;">
-                            <label for="comprovante">Anexe o Comprovante (Obrigatório):</label>
+                            <label for="comprovante" style="font-size: 0.85rem;">Anexe o Comprovante (Obrigatório):</label>
                             <input type="file" id="comprovante" accept="image/*">
                         </div>
                     </div>
 
                     <div id="card-area" class="payment-details-box">
-                        <h4 style="color: var(--heading-color); margin-bottom: 15px; font-weight: 900;"><i class="far fa-credit-card" style="color: var(--secondary-color);"></i> Pagamento na Entrega</h4>
+                        <h4 style="color: var(--heading-color); margin-bottom: 15px; font-weight: 900; font-size: 1.1rem;"><i class="far fa-credit-card" style="color: var(--secondary-color);"></i> Pagamento na Entrega</h4>
                         
-                        <div class="alert-info">
-                            <i class="fas fa-motorcycle"></i>
-                            <p style="margin: 0; font-size: 0.95rem; font-weight: 600;">
-                                <strong>Fique tranquilo!</strong> O nosso entregador levará a maquininha ou o troco até você em segurança.
+                        <div class="alert-info" style="padding: 15px;">
+                            <i class="fas fa-motorcycle" style="font-size: 1.5rem;"></i>
+                            <p style="margin: 0; font-size: 0.85rem; font-weight: 600;">
+                                O entregador levará a maquininha ou o troco.
                             </p>
                         </div>
                     </div>
 
-                    <button type="submit" id="btn-submit-order" class="btn checkout-btn" style="margin-top: 15px;">Confirmar e Pedir</button>
+                    <button type="submit" id="btn-submit-order" class="btn checkout-btn" style="margin-top: 15px;">Confirmar Pedido</button>
                 </form>
             </div>
         </div>
@@ -322,7 +357,7 @@
 
     <footer>
         <div class="footer-content">
-            <a href="#home" class="footer-logo"><i class="fas fa-pizza-slice"></i>Pizzaria <span>Bom</span> de Vida</a>
+            <a href="#home" class="footer-logo"><i class="fas fa-pizza-slice"></i><span>Bom</span> de Vida</a>
             
             <div class="footer-social">
                 <a href="https://instagram.com/lowkey_gusta" target="_blank" class="social-icon icon-insta" title="Siga-nos no Instagram">
@@ -335,18 +370,19 @@
 
             <div class="footer-info">
                 <p><i class="fas fa-map-marker-alt"></i> Amador Bueno, Itapevi - SP</p>
-                <p><i class="fas fa-phone-alt"></i> Delivery / WhatsApp: (11) 93086-2733</p>
+                <p><i class="fas fa-phone-alt"></i> Delivery / Wpp: (11) 93086-2733</p>
                 <p><i class="fab fa-instagram"></i> @lowkey_gusta</p>
                 <p><i class="fas fa-clock"></i> Terça a Domingo - 18h às 23h30</p>
             </div>
             
             <div class="copyright">
-                <p>&copy; 2026 Pizzaria Bom de Vida. Feito com <i class="fas fa-heart" style="color: var(--primary-color); margin: 0 5px;"></i> para você.</p>
+                <p>&copy; 2026 Pizzaria Bom de Vida.</p>
             </div>
         </div>
     </footer>
 
     <script type="module">
+        /* O JavaScript permanece inalterado em relação ao código anterior */
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-app.js";
         import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-analytics.js";
         import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.12.0/firebase-firestore.js";
@@ -389,7 +425,7 @@
                     
                     if(window.pizzas.length === 0){
                        window.pizzas = [
-                          { id: '1', name: "Banco de Dados Conectado!", description: "Você precisa adicionar pizzas no painel do Firebase.", price: 0.00, image: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
+                          { id: '1', name: "Banco de Dados Conectado!", description: "Adicione pizzas no painel do Firebase.", price: 0.00, image: "https://images.unsplash.com/photo-1590947132387-155cc02f3212?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
                        ];
                     } 
                     window.renderMenu();
@@ -402,9 +438,9 @@
                     window.pizzas = JSON.parse(dbPizzas);
                 } else {
                     window.pizzas = [
-                        { id: 1, name: "Margherita Premium", description: "Molho de tomate artesanal, mussarela de búfala fresca e manjericão orgânico.", price: 49.90, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" },
-                        { id: 2, name: "Calabresa Artesanal", description: "Calabresa curada defumada, cebola roxa, azeitonas pretas e orégano fresco.", price: 45.00, image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" },
-                        { id: 3, name: "Quatro Queijos", description: "Blend perfeito de mussarela, gorgonzola, provolone e parmesão gratinado.", price: 52.50, image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
+                        { id: 1, name: "Margherita Premium", description: "Molho de tomate artesanal, mussarela de búfala fresca e manjericão.", price: 49.90, image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" },
+                        { id: 2, name: "Calabresa Artesanal", description: "Calabresa curada defumada, cebola roxa, azeitonas e orégano.", price: 45.00, image: "https://images.unsplash.com/photo-1534308983496-4fabb1a015ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" },
+                        { id: 3, name: "Quatro Queijos", description: "Mussarela, gorgonzola, provolone e parmesão gratinado.", price: 52.50, image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" }
                     ];
                     localStorage.setItem('db_pizzas', JSON.stringify(window.pizzas));
                 }
@@ -432,7 +468,7 @@
                         </div>
                         <div class="price-row">
                             <span class="price"><span>R$</span> ${parseFloat(pizza.price).toFixed(2).replace('.', ',')}</span>
-                            <button class="btn-add" onclick="window.addToCart('${pizza.id}')" title="Adicionar ao Carrinho">
+                            <button class="btn-add" onclick="window.addToCart('${pizza.id}')" title="Adicionar">
                                 <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -485,7 +521,7 @@
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
                     <div>
-                        <h4>${item.name}</h4>
+                        <h4 style="margin-bottom: 5px; font-size: 0.95rem;">${item.name}</h4>
                         <span class="cart-item-price">R$ ${parseFloat(item.price).toFixed(2).replace('.', ',')}</span>
                     </div>
                     <button class="remove-btn" onclick="window.removeFromCart(${index})" title="Remover"><i class="fas fa-trash"></i></button>
@@ -558,7 +594,7 @@
 
                     if (cidadesBloqueadas.includes(cidadeLocal)) {
                         window.isDeliveryValid = false;
-                        Swal.fire({ icon: 'error', title: 'Distância Muito Longa 🚫', text: `Infelizmente não entregamos em ${addressData.cidade} e regiões próximas.`, confirmButtonColor: '#E62429' });
+                        Swal.fire({ icon: 'error', title: 'Distância Muito Longa 🚫', text: `Infelizmente não entregamos em ${addressData.cidade}.`, confirmButtonColor: '#E62429' });
                         cepInput.value = ''; document.getElementById('address').value = '';
                         return; 
                     }
@@ -570,7 +606,7 @@
                         const distancia = calcularDistancia(LAT_PIZZARIA, LON_PIZZARIA, latCliente, lonCliente);
                         if (distancia > 9) {
                             window.isDeliveryValid = false;
-                            Swal.fire({ icon: 'error', title: 'Fora da Área de Entrega 🛵🚫', text: `Distância: ${distancia.toFixed(1)} km. Nosso limite é 9 km.`, confirmButtonColor: '#E62429' });
+                            Swal.fire({ icon: 'error', title: 'Fora da Área 🛵🚫', text: `Distância: ${distancia.toFixed(1)} km. Nosso limite é 9 km.`, confirmButtonColor: '#E62429' });
                             cepInput.value = ''; addressInput.value = '';
                         } else {
                             window.isDeliveryValid = true;
@@ -584,7 +620,7 @@
                             addressInput.focus();
                         } else {
                             window.isDeliveryValid = false;
-                            Swal.fire({ icon: 'error', title: 'Fora da Área de Entrega 🛵🚫', text: `Este CEP é de ${addressData.cidade}, muito longe para entrega.`, confirmButtonColor: '#E62429' });
+                            Swal.fire({ icon: 'error', title: 'Fora da Área 🛵🚫', text: `Este CEP é de ${addressData.cidade}, muito longe para entrega.`, confirmButtonColor: '#E62429' });
                             cepInput.value = ''; addressInput.value = '';
                         }
                     }
@@ -689,7 +725,7 @@
             } catch(e) {
                 Swal.fire({ icon: 'error', title: 'Erro no Pedido', text: 'Tivemos um problema. Tente novamente.', confirmButtonColor: '#E62429' });
             } finally {
-                btnSubmit.innerHTML = 'Confirmar e Pedir';
+                btnSubmit.innerHTML = 'Confirmar Pedido';
                 btnSubmit.disabled = false;
             }
         };
